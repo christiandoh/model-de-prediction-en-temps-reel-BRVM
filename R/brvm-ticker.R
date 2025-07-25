@@ -25,7 +25,7 @@
 
 BRVM_tickers <- function(){
     tryCatch(
-        {
+         {
             all.tickers <- gsheet::gsheet2tbl("https://docs.google.com/spreadsheets/d/1RZ4uh4O8klBgo14eL-JyRL-UbbcAVkC_UY5Ouk4FNRE/edit#gid=581510196")
             # all.tickers <- xml2::read_html("https://www.brvm.org/en/cours-actions/0/") %>%
             #   rvest::html_elements('table') %>%
