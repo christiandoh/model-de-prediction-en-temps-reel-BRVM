@@ -20,8 +20,7 @@
 #' BRVM_tickers()
 #' ticks <- BRVM_tickers()
 #' dput(ticks$Ticker) ## Returns the name of all tickers
-#'} #
-
+#'}
 
 setGeneric("BRVM_tickers", function(object) standardGeneric("BRVM_tickers"))
 
