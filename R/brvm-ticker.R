@@ -22,6 +22,8 @@
 #' dput(ticks$Ticker) ## Returns the name of all tickers
 #'}
 
+# Verifiation
+
 setGeneric("BRVM_tickers", function(object) standardGeneric("BRVM_tickers"))
 
 setMethod("BRVM_tickers", "ANY", function(object) {
