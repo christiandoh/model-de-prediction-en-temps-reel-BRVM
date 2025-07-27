@@ -20,10 +20,12 @@
 #' BRVM_tickers()
 #' ticks <- BRVM_tickers()
 #' dput(ticks$Ticker) ## Returns the name of all tickers
-#'}
+#'} #
 
 
-BRVM_tickers <- function(){
+setGeneric("BRVM_tickers", function(object) standardGeneric("BRVM_tickers"))
+
+setMethod("BRVM_tickers", "ANY", function(object) {
     tryCatch(
          {
             all.tickers <- gsheet::gsheet2tbl("https://docs.google.com/spreadsheets/d/1RZ4uh4O8klBgo14eL-JyRL-UbbcAVkC_UY5Ouk4FNRE/edit#gid=581510196")
@@ -46,5 +48,4 @@ BRVM_tickers <- function(){
             message("Make sure you have an active internet connection")
         }
     )
-
-}
+})
