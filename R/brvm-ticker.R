@@ -65,10 +65,10 @@ setMethod("$", "brvm_tickers", function(x, name) {
 
 setMethod("show","brvm_tickers",function(object){
     output = c(
-        "============================ BRVM TICKERS ============================",
+        paste0("============================ BRVM TICKERS [n = ",length(object@List),"] ============================"),
         paste(object@List,collapse = ", "),"\n",
-        #paste0("\u2023 === INDEXES"),
-        #capture.output(print(object@Indexes)),
+        paste0("\u2023 === INDEXES [n = ",nrow(object@Indexes),"]"),
+        capture.output(print(object@Indexes)),
         paste0("\u2023 === SHARES [n = ",nrow(object@Shares),"]"),
         capture.output(print(object@Shares))
     )
@@ -111,10 +111,16 @@ setMethod("BRVM_tickers", signature(object = "missing"), function(object) {
              url_shares = "https://www.brvm.org/en/cours-actions/0/"
 
              # indexes
-             #indexes_page <- GET(url_indexes, config(ssl_verifypeer = FALSE))
-             #indexes_tables <- read_html(indexes_page, encoding = "UTF-8") %>%
-                 #html_elements("table") %>% html_table()
-             #object@Indexes = as.data.frame(do.call("rbind",indexes_tables[4:100]))
+             indexes_page <- GET(url_indexes, config(ssl_verifypeer = FALSE))
+             indexes_tables <- read_html(indexes_page, encoding = "UTF-8") %>%
+                 html_elements("table") %>% html_table()
+             object@Indexes = as.data.frame(do.call("rbind",indexes_tables[4:100]))[1]
+             object@Indexes$Ticker = paste0(
+                 "BRVM",c(
+                     "30","C","PR","PA","-CB","-CD","-EN","-IN","SF","SP","-TEL","AG","AS",
+                     "DI","FI","IN","-SP","TR"
+                 )
+             )
 
              # shares
              asset_page <- GET(url_shares, config(ssl_verifypeer = FALSE))
@@ -124,7 +130,7 @@ setMethod("BRVM_tickers", signature(object = "missing"), function(object) {
              colnames(object@Shares)<-c("Ticker","Company name")
 
              # List
-             object@List = object@Shares[,1]
+             object@List = c(object@Indexes[,2],object@Shares[,1])
 
             return(object)
         },
