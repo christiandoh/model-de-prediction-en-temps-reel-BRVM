@@ -1,15 +1,13 @@
 #' BRVM Tickers - Information about listed companies on BRVM Stock Exchange
 #'
 #' @description
-#' Retrieves information about companies listed on the Bourse Régionale des Valeurs Mobilières (BRVM).
+#' Retrieves information about companies listed on the Bourse R\u00E9gionale des Valeurs Mobili\u00E8res (BRVM).
 #' This function returns an S4 object containing the list of tickers, detailed shares information,
 #' and (optionally) BRVM indexes.
 #'
 #' @details
 #' The BRVM (Bourse Régionale des Valeurs Mobilières) is a regional stock exchange serving the
 #' West African Economic and Monetary Union (WAEMU / UEMOA).
-#' This function scrapes public BRVM web pages to return a structured dataset of listed companies.
-#'
 #' @return An object of class \code{brvm_tickers} with the following slots:
 #' \itemize{
 #'   \item \code{List} - Character vector containing the tickers.
@@ -111,16 +109,20 @@ setMethod("BRVM_tickers", signature(object = "missing"), function(object) {
              url_shares = "https://www.brvm.org/en/cours-actions/0/"
 
              # indexes
-             indexes_page <- GET(url_indexes, config(ssl_verifypeer = FALSE))
-             indexes_tables <- read_html(indexes_page, encoding = "UTF-8") %>%
-                 html_elements("table") %>% html_table()
-             object@Indexes = as.data.frame(do.call("rbind",indexes_tables[4:100]))[1]
-             object@Indexes$Ticker = paste0(
+             object@Indexes = data.frame(Ticker = paste0(
                  "BRVM",c(
                      "30","C","PR","PA","-CB","-CD","-EN","-IN","SF","SP","-TEL","AG","AS",
                      "DI","FI","IN","-SP","TR"
                  )
+             ),
+             Name = c('BRVM - 30','BRVM - COMPOSITE','BRVM - PRESTIGE','BRVM - PRINCIPAL','BRVM - CONSOMMATION DE BASE','BRVM - CONSOMMATION DISCRETIONNAIRE','BRVM - ENERGIE','BRVM - INDUSTRIELS','BRVM - SERVICES FINANCIERS','BRVM - SERVICES PUBLICS','BRVM - TELECOMMUNICATIONS','BRVM - AGRICULTURE','BRVM - AUTRES SECTEURS','BRVM - DISTRIBUTION','BRVM - FINANCE','BRVM - INDUSTRIE','BRVM - SERVICES PUBLICS','BRVM - TRANSPORT')
              )
+
+             #indexes_page <- GET(url_indexes, config(ssl_verifypeer = FALSE))
+             #indexes_tables <- read_html(indexes_page, encoding = "UTF-8") %>%
+             #html_elements("table") %>% html_table()
+             #object@Indexes = as.data.frame(do.call("rbind",indexes_tables[4:100]))[1]
+
 
              # shares
              asset_page <- GET(url_shares, config(ssl_verifypeer = FALSE))
@@ -130,7 +132,7 @@ setMethod("BRVM_tickers", signature(object = "missing"), function(object) {
              colnames(object@Shares)<-c("Ticker","Company name")
 
              # List
-             object@List = c(object@Indexes[,2],object@Shares[,1])
+             object@List = c(object@Indexes[,1],object@Shares[,1])
 
             return(object)
         },
@@ -142,5 +144,6 @@ setMethod("BRVM_tickers", signature(object = "missing"), function(object) {
         }
     )
 })
+
 
 
