@@ -2,28 +2,51 @@
 % Please edit documentation in R/brvm-ticker.R
 \name{BRVM_tickers}
 \alias{BRVM_tickers}
-\title{BRVM Tickers - Information about listed companies on BRVM Stock exchange}
+\title{Get BRVM Tickers}
 \usage{
-BRVM_tickers()
+BRVM_tickers(object)
+}
+\arguments{
+\item{object}{An object of class \code{missing}, indicating this method is a constructor that does not require an input object.}
 }
 \value{
-A tibble
+A new S4 object of class \code{market_description} populated with ticker data from the BRVM.
 }
 \description{
-It receives no argument and returns two informations about BRVM exchange companies (ticker and company name).
+A method that retrieves and processes ticker data for indexes and shares from the BRVM website.
+Retrieves information about companies listed on the Bourse Régionale des Valeurs Mobilières (BRVM).
+This function returns an S4 object containing the list of tickers, detailed shares information,
+and (optionally) BRVM indexes.
+}
+\details{
+The BRVM (Bourse Régionale des Valeurs Mobilières) is a regional stock exchange serving the
+West African Economic and Monetary Union (WAEMU / UEMOA).
 }
 \examples{
-\donttest{
+\dontrun{
 BRVM_tickers()
 ticks <- BRVM_tickers()
 dput(ticks$Ticker) ## Returns the name of all tickers
 }
+
+\donttest{
+# Retrieve BRVM tickers
+brvm_tickers <- BRVM_tickers()
+
+# Display shares
+brvm_tickers$Shares
+
+# List of tickers
+brvm_tickers$List
+
+# Print object
+brvm_tickers
 }
-\seealso{
-\code{BRVM_ticker_desc()}
 }
 \author{
 Koffi Frederic SESSIE
+
+Olabiyi Aurel Géoffroy ODJO
 
 Oudouss Diakité Abdoul
 

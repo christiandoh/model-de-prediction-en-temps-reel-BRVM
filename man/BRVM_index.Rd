@@ -27,7 +27,6 @@ Other Data Retrieval:
 \code{\link{BRVM_bySector}()},
 \code{\link{BRVM_cap}()},
 \code{\link{BRVM_company_rank}()},
-\code{\link{BRVM_get1}()},
 \code{\link{BRVM_get}()},
 \code{\link{BRVM_index_stock}()},
 \code{\link{BRVM_market_activity}()},

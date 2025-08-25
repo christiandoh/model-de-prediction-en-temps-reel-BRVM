@@ -30,10 +30,9 @@ Other Data Retrieval:
 \code{\link{BRVM_bySector}()},
 \code{\link{BRVM_cap}()},
 \code{\link{BRVM_company_rank}()},
-\code{\link{BRVM_get1}()},
 \code{\link{BRVM_get}()},
-\code{\link{BRVM_index_stock}()},
 \code{\link{BRVM_index}()},
+\code{\link{BRVM_index_stock}()},
 \code{\link{BRVM_market_activity}()},
 \code{\link{BRVM_plot}()},
 \code{\link{BRVM_stock_market}()},
@@ -43,17 +42,14 @@ Other Data Retrieval:
 \code{\link{company_sector}()},
 \code{\link{company_traded_val}()}
 
-Other Richbourse: 
-\code{\link{BRVM_get}()}
-
 Other BRVM: 
 \code{\link{BRVM.index}()},
 \code{\link{BRVM_cap}()},
 \code{\link{BRVM_company_cap}()},
 \code{\link{BRVM_company_rank}()},
 \code{\link{BRVM_company_url}()},
-\code{\link{BRVM_index_stock}()},
 \code{\link{BRVM_index}()},
+\code{\link{BRVM_index_stock}()},
 \code{\link{BRVM_market_activity}()},
 \code{\link{BRVM_plot}()},
 \code{\link{BRVM_stock_market}()},

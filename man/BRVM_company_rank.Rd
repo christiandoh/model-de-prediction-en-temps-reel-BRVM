@@ -17,15 +17,14 @@ This function will get the rank of the companies listed on the BVRM exchange thr
 The function takes no parameter
 }
 \examples{
-
+\donttest{
+library(dplyr)
 BRVM_company_rank()
-comp.rank<-BRVM_company_rank()
+comp.rank <- BRVM_company_rank()
 comp.rank<-comp.rank\%>\%
 dplyr::arrange(desc(percent_change))
 comp.rank
-
-
-BRVM_company_rank()
+}
 }
 \seealso{
 \url{https://www.brvm.org/en/cours-actions/0}
@@ -33,10 +32,9 @@ BRVM_company_rank()
 Other Data Retrieval: 
 \code{\link{BRVM_bySector}()},
 \code{\link{BRVM_cap}()},
-\code{\link{BRVM_get1}()},
 \code{\link{BRVM_get}()},
-\code{\link{BRVM_index_stock}()},
 \code{\link{BRVM_index}()},
+\code{\link{BRVM_index_stock}()},
 \code{\link{BRVM_market_activity}()},
 \code{\link{BRVM_plot}()},
 \code{\link{BRVM_stock_market}()},
@@ -52,8 +50,8 @@ Other BRVM:
 \code{\link{BRVM_cap}()},
 \code{\link{BRVM_company_cap}()},
 \code{\link{BRVM_company_url}()},
-\code{\link{BRVM_index_stock}()},
 \code{\link{BRVM_index}()},
+\code{\link{BRVM_index_stock}()},
 \code{\link{BRVM_market_activity}()},
 \code{\link{BRVM_plot}()},
 \code{\link{BRVM_stock_market}()},

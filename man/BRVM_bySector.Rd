@@ -39,10 +39,9 @@ BRVM_bySector(.sectors = c("Other", "Agriculture"))
 Other Data Retrieval: 
 \code{\link{BRVM_cap}()},
 \code{\link{BRVM_company_rank}()},
-\code{\link{BRVM_get1}()},
 \code{\link{BRVM_get}()},
-\code{\link{BRVM_index_stock}()},
 \code{\link{BRVM_index}()},
+\code{\link{BRVM_index_stock}()},
 \code{\link{BRVM_market_activity}()},
 \code{\link{BRVM_plot}()},
 \code{\link{BRVM_stock_market}()},

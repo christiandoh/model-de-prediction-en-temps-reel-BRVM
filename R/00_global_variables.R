@@ -6,7 +6,7 @@ globalVariables(
               'hc_yAxis_multiples', 'hcaes', 'highchart', 'html_nodes', 'html_table', 'is.ts',
               'isWeekday', 'jarque.bera.test', 'kpss.test', 'left_join', 'lillie.test', 'na.omit',
               'na.remove', 'pearson.test', 'pp.test', 'read_html', 'req_body_json', 'req_perform',
-              'request', 'resp_body_json', 'sf.test', 'shapiro.test', 'str_replace', 'str_sub',
+              'request', 'resp_body_json', 'sf.test', 'shapiro.test', 'str_replace', 'str_sub','african_market',
               'str_to_title', 'summarise', 'html_elements', 'adn_ticker', 'numeric_columns', 'across', 'all_of'
               )
     )

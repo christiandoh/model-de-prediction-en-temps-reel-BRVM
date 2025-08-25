@@ -5,7 +5,7 @@
 \title{BRVM index stock - Given a set of indexes, return their stock data}
 \usage{
 BRVM_index_stock(
-  .ticker = "BRVM10",
+  .ticker = "BRVM30",
   Period = 0,
   from = Sys.Date() - 89,
   to = Sys.Date()
@@ -52,7 +52,6 @@ Other Data Retrieval:
 \code{\link{BRVM_bySector}()},
 \code{\link{BRVM_cap}()},
 \code{\link{BRVM_company_rank}()},
-\code{\link{BRVM_get1}()},
 \code{\link{BRVM_get}()},
 \code{\link{BRVM_index}()},
 \code{\link{BRVM_market_activity}()},

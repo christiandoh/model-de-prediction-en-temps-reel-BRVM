@@ -1,10 +1,12 @@
 Package: BRVM
 Type: Package
 Title: Retrieve Historical Data of Companies Listed on the 'BRVM' Stock Exchange
-Version: 5.0.1
+Version: 5.3.1
 Authors@R: c(
     person("Sessie","Koffi Frederic", email = "koffisessie@gmail.com",
             role = c("aut","cre","cph")),
+    person("Odjo", "Olabiyi Aurel Géoffroy", role = "aut",
+            email = "odjoaurel@gmail.com"),
     person("Diakité", "Abdoul Oudouss", role = "aut",
             email = "abdouloudoussdiakite@gmail.com"),
     person("Steven","Sanderson", role = "aut",
@@ -38,6 +40,8 @@ Imports:
 Suggests: 
     rmarkdown,
     knitr,
-    roxygen2
+    roxygen2,
+    testthat (>= 3.0.0)
 VignetteBuilder: knitr
-RoxygenNote: 7.2.3
+RoxygenNote: 7.3.1
+Config/testthat/edition: 3
