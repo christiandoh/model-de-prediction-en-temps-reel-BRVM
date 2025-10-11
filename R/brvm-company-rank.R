@@ -1,10 +1,38 @@
-#' BRVM Companies Rank - Get all tickers rank according to last quotation
+#' BRVM Company Ranking by Daily Performance
+#'
+#' @description
+#' Retrieves daily trading data for all companies listed on the
+#' Bourse Régionale des Valeurs Mobilières (BRVM) and ranks them
+#' according to their percentage change in share price.
+#'
+#' @param object No need to give an argument.
+#'
+#' @details
+#' The function scrapes the official BRVM website to collect trading
+#' information such as traded volume, previous price, opening price,
+#' closing price, and daily percent change.
+#' After cleaning and converting numeric fields, companies are ranked
+#' in descending order of percentage change, making it easy to identify
+#' the day's top gainers and losers.
+#'
+#' @return
+#' A tibble containing the following columns:
+#' \itemize{
+#'   \item \code{ticker} – The stock ticker symbol.
+#'   \item \code{company_name} – The name of the company.
+#'   \item \code{percent_change} – The daily percentage change.
+#'   \item \code{rank} – The company's position in the ranking (1 = highest increase).
+#' }
+#'
 #'
 #' @family Data Retrieval
 #' @family BRVM
 #'
+#' @import rvest dplyr
+#'
 #' @author Koffi Frederic SESSIE
-#' @author Oudouss Diakité Abdoul
+#' @author Olabiyi Aurel Geoffroy ODJO
+#' @author Oudouss Diakite Abdoul
 #' @author Steven P. Sanderson II, MPH
 #'
 #' @seealso \url{https://www.brvm.org/en/cours-actions/0}
@@ -23,6 +51,7 @@
 #' @examples
 #' \donttest{
 #' library(dplyr)
+#' library(rvest)
 #' BRVM_company_rank()
 #' comp.rank <- BRVM_company_rank()
 #' comp.rank<-comp.rank%>%
@@ -30,8 +59,9 @@
 #' comp.rank
 #'}
 
-
-BRVM_company_rank <- function(){
+setGeneric("BRVM_company_rank", function(object) standardGeneric("BRVM_company_rank" ))
+#' @export
+setMethod("BRVM_company_rank", signature(object = "missing"), function(object) {
   tryCatch(
     {
       quotes_tbl <- rvest::read_html("https://www.brvm.org/en/cours-actions/0/status/200") %>%
@@ -74,6 +104,7 @@ BRVM_company_rank <- function(){
       quotes_tbl <- quotes_tbl[order(-quotes_tbl$`percent_change`),]
       #quotes_tbl <-dplyr::arrange(quotes_tbl, dplyr::desc(quotes_tbl$`percent_change`))
       # quotes_tbl <- quotes_tbl[sort(quotes_tbl$rank), ]
+      #print(names(quotes_tbl))
       return(quotes_tbl[c(1,2,7,8)])
     },
     error = function(e) {
@@ -83,4 +114,5 @@ BRVM_company_rank <- function(){
       message("Make sure you have an active internet connection")
     }
   )
-}
+})
+

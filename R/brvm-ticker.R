@@ -13,11 +13,13 @@
 #' The BRVM (Bourse Régionale des Valeurs Mobilières) is a regional stock exchange serving the
 #' West African Economic and Monetary Union (WAEMU / UEMOA).
 #'
-#' @importFrom rvest read_html html_elements
+#' @import rvest
+#' @import httr2
+#' @import tidyr
 #'
 #' @author Koffi Frederic SESSIE
-#' @author Olabiyi Aurel Géoffroy ODJO
-#' @author Oudouss Diakité Abdoul
+#' @author Olabiyi Aurel Geoffroy ODJO
+#' @author Oudouss Diakite Abdoul
 #' @author Steven P. Sanderson II, MPH
 #'
 #' @examples
@@ -29,6 +31,9 @@
 #'
 #' \donttest{
 #' # Retrieve BRVM tickers
+#' library(rvest)
+#' library(httr2)
+#' library(tidyr)
 #' brvm_tickers <- BRVM_tickers()
 #'
 #' # Display shares
@@ -40,7 +45,7 @@
 #' # Print object
 #' brvm_tickers
 #' }
-setGeneric("BRVM_tickers", function(object) standardGeneric("BRVM_tickers"))
+setGeneric("BRVM_tickers", function(object) standardGeneric("BRVM_tickers" ))
 #' @export
 setMethod("BRVM_tickers", signature(object = "missing"), function(object) {
     tryCatch(
@@ -76,35 +81,36 @@ setMethod("BRVM_tickers", signature(object = "missing"), function(object) {
             brvm_market = CREATE_ALL_MARKETS()$BRVM_MARKET
 
              # Extraire les éléments <option> dans le <select id="dpShares">
-             options <- rvest::read_html(brvm_market@Market_url) %>%
+             options <- rvest::read_html(brvm_market@Market_url[1]) %>%
                  rvest::html_element(xpath = '//*[@id="dpShares"]') %>%
                  rvest::html_elements("option")
 
              # General extraction
 
              ticker_data <- data.frame(
-                 Ticker = sub("\\..*", "", options %>% html_attr("value")), # avant les "."
-                 Description = options %>% html_text(trim = TRUE),
-                 Complete_Ticker_Name = options %>% html_attr("value"),
                  Type = ifelse(options %>% html_attr("value") == "","Nothing",
-                         ifelse(grepl("\\.",options %>% html_attr("value")),"Share","Index"))
+                               ifelse(grepl("\\.",options %>% html_attr("value")),"Share","Index")),
+                 Ticker = options %>% html_attr("value") %>% strsplit("\\.") %>% sapply(`[`, 1), # avant les "."
+                 Description = options %>% html_text(trim = TRUE),
+                 `Country.Code` = options %>% html_attr("value") %>% strsplit("\\.") %>% sapply(`[`, 2) %>% toupper(),
+                 Ticker_fullname = options %>% html_attr("value")
              )
-             ticker_data = ticker_data[order(ticker_data$Ticker),]
+             ticker_data = ticker_data[order(ticker_data$Country.Code ),]
 
 
              # Indexes
-             brvm_market@Indexes = ticker_data[startsWith(ticker_data$Ticker,"BRVM") & ticker_data$Type == "Index",1:2]
+             brvm_market@Indexes = ticker_data[startsWith(ticker_data$Ticker_fullname,"BRVM") & ticker_data$Type == "Index",2:3]
              rownames(brvm_market@Indexes) = NULL
 
              # Shares
-             brvm_market@Shares = ticker_data[!startsWith(ticker_data$Ticker,"BRVM") & !startsWith(ticker_data$Ticker,"SIKA") & ticker_data$Type == "Share",1:2]
+             brvm_market@Shares = ticker_data[!startsWith(ticker_data$Ticker_fullname,"BRVM") & !startsWith(ticker_data$Ticker_fullname,"SIKA") & ticker_data$Type == "Share",2:4]
              rownames(brvm_market@Shares) = NULL
 
              # Name List
              brvm_market@ListIndexes = brvm_market@Indexes[,1]
              brvm_market@ListShares = brvm_market@Shares[,1]
-             brvm_market@List = c(brvm_market@ListIndexes,brvm_market@ListShares) #Nom de tout actifs
-             brvm_market@Ticker_full_name = ticker_data[!(ticker_data$Complete_Ticker_Name == ""),3]
+             brvm_market@List = c(brvm_market@ListIndexes,brvm_market@ListShares) #Nom de tous les actifs
+             brvm_market@Ticker_full_name = ticker_data[!(ticker_data$Ticker_fullname == ""),5]
 
             return(brvm_market)
         },
@@ -116,3 +122,4 @@ setMethod("BRVM_tickers", signature(object = "missing"), function(object) {
         }
     )
 })
+
