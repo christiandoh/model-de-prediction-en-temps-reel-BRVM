@@ -2,9 +2,12 @@
 % Please edit documentation in R/brvm-bysector.R
 \name{BRVM_bySector}
 \alias{BRVM_bySector}
+\alias{BRVM_bySector,character-method}
 \title{BRVM By Sector}
 \usage{
-BRVM_bySector(.sectors = NULL)
+BRVM_bySector(.sectors = "ALL")
+
+\S4method{BRVM_bySector}{character}(.sectors = "ALL")
 }
 \arguments{
 \item{.sectors}{A vector of sectors you wish to have returned.}
@@ -27,7 +30,7 @@ library(xml2)
 library(rvest)
 library(dplyr)
 
-sectors <- c("Industry","Administration","PUblic service", "AUtr", "FINANCE",
+sectors <- c("Industriels","Administration","PUblic service", "AUtr", "SeRVICES FINaNCIERS",
             "distribution", 25)
 BRVM_bySector(.sectors = sectors)
 BRVM_bySector(.sectors = "All")
@@ -40,22 +43,17 @@ Other Data Retrieval:
 \code{\link{BRVM_cap}()},
 \code{\link{BRVM_company_rank}()},
 \code{\link{BRVM_get}()},
-\code{\link{BRVM_index}()},
-\code{\link{BRVM_index_stock}()},
-\code{\link{BRVM_market_activity}()},
 \code{\link{BRVM_plot}()},
+\code{\link{BRVM_rank}()},
 \code{\link{BRVM_stock_market}()},
-\code{\link{BRVM_ticker_desc}()},
-\code{\link{company_cap}()},
-\code{\link{company_country}()},
-\code{\link{company_nbrank}()},
-\code{\link{company_sector}()},
-\code{\link{company_traded_val}()}
+\code{\link{company_sector}()}
 }
 \author{
 Koffi Frederic SESSIE
 
-Oudouss Diakité Abdoul
+Olabiyi Aurel Geoffroy ODJO
+
+Oudouss Diakite Abdoul
 
 Steven P. Sanderson II, MPH
 }

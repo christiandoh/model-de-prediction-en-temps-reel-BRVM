@@ -5,6 +5,7 @@
 #' @family Data Retrieval
 #' @family BRVM
 #' @author Koffi Frederic SESSIE
+#' @author Olabiyi Aurel Geoffroy ODJO
 #'
 #' @seealso \url{https://www.brvm.org/en/capitalisations/0}
 #'
@@ -22,7 +23,6 @@
 #' BRVM_cap()
 #'
 #'
-
 BRVM_cap <- function(){
   # company<-toupper(company)
   tryCatch({
@@ -47,3 +47,4 @@ BRVM_cap <- function(){
     message("Make sure you have an active internet connection")
   })
 }
+

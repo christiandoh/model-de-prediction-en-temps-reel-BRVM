@@ -2,9 +2,15 @@
 % Please edit documentation in R/brvm-stationarity-test.R
 \name{stationarity_test}
 \alias{stationarity_test}
+\alias{stationarity_test,numeric-method}
+\alias{stationarity_test,ts-method}
 \title{Stationarity test with univariate data}
 \usage{
 stationarity_test(x, type.test)
+
+\S4method{stationarity_test}{numeric}(x, type.test)
+
+\S4method{stationarity_test}{ts}(x, type.test)
 }
 \arguments{
 \item{x}{a numeric vector or time series.}
@@ -26,7 +32,7 @@ library(tseries)
 y <-ts(c(5353.08,5409.24,5315.57,5270.53, 5211.66,NA,NA,5160.80,5172.37,5160.80,5172.37))
 
 stationarity_test(y, "Box-Pierce and Ljung-Box")
-
+stationarity_test(y, "ALL")
 
 }
 \seealso{
@@ -36,27 +42,20 @@ Other Test:
 \code{\link{normality_test}()}
 
 Other BRVM: 
-\code{\link{BRVM.index}()},
 \code{\link{BRVM_cap}()},
 \code{\link{BRVM_company_cap}()},
 \code{\link{BRVM_company_rank}()},
 \code{\link{BRVM_company_url}()},
-\code{\link{BRVM_index}()},
-\code{\link{BRVM_index_stock}()},
-\code{\link{BRVM_market_activity}()},
 \code{\link{BRVM_plot}()},
+\code{\link{BRVM_rank}()},
 \code{\link{BRVM_stock_market}()},
-\code{\link{BRVM_ticker_desc}()},
-\code{\link{BRVM_traded_val}()},
-\code{\link{company_cap}()},
-\code{\link{company_country}()},
-\code{\link{company_nbrank}()},
 \code{\link{company_sector}()},
-\code{\link{company_traded_val}()},
 \code{\link{normality_test}()}
 }
 \author{
 Koffi Frederic SESSIE
+
+Olabiyi Aurel Geoffroy ODJO
 }
 \concept{BRVM}
 \concept{Test}

@@ -25,40 +25,26 @@ Other Data Retrieval:
 \code{\link{BRVM_bySector}()},
 \code{\link{BRVM_company_rank}()},
 \code{\link{BRVM_get}()},
-\code{\link{BRVM_index}()},
-\code{\link{BRVM_index_stock}()},
-\code{\link{BRVM_market_activity}()},
 \code{\link{BRVM_plot}()},
+\code{\link{BRVM_rank}()},
 \code{\link{BRVM_stock_market}()},
-\code{\link{BRVM_ticker_desc}()},
-\code{\link{company_cap}()},
-\code{\link{company_country}()},
-\code{\link{company_nbrank}()},
-\code{\link{company_sector}()},
-\code{\link{company_traded_val}()}
+\code{\link{company_sector}()}
 
 Other BRVM: 
-\code{\link{BRVM.index}()},
 \code{\link{BRVM_company_cap}()},
 \code{\link{BRVM_company_rank}()},
 \code{\link{BRVM_company_url}()},
-\code{\link{BRVM_index}()},
-\code{\link{BRVM_index_stock}()},
-\code{\link{BRVM_market_activity}()},
 \code{\link{BRVM_plot}()},
+\code{\link{BRVM_rank}()},
 \code{\link{BRVM_stock_market}()},
-\code{\link{BRVM_ticker_desc}()},
-\code{\link{BRVM_traded_val}()},
-\code{\link{company_cap}()},
-\code{\link{company_country}()},
-\code{\link{company_nbrank}()},
 \code{\link{company_sector}()},
-\code{\link{company_traded_val}()},
 \code{\link{normality_test}()},
 \code{\link{stationarity_test}()}
 }
 \author{
 Koffi Frederic SESSIE
+
+Olabiyi Aurel Geoffroy ODJO
 }
 \concept{BRVM}
 \concept{Data Retrieval}

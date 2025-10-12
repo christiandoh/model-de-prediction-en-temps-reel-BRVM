@@ -2,9 +2,24 @@
 % Please edit documentation in R/brvm-get-data.R
 \name{BRVM_get}
 \alias{BRVM_get}
+\alias{BRVM_get,character-method}
 \title{Get historical data for BRVM securities}
 \usage{
-BRVM_get(ticker, ...)
+BRVM_get(
+  ticker = "ALL",
+  Period = "daily",
+  from = Sys.Date() - 89,
+  to = Sys.Date(),
+  output_format = c("by_col", "by_row")
+)
+
+\S4method{BRVM_get}{character}(
+  ticker = "ALL",
+  Period = "daily",
+  from = Sys.Date() - 89,
+  to = Sys.Date(),
+  output_format = c("by_col", "by_row")
+)
 }
 \arguments{
 \item{ticker}{A character vector specifying the tickers of the securities to retrieve. The ticker names are case-insensitive. Special values include:
@@ -18,7 +33,7 @@ BRVM_get(ticker, ...)
 \item{Period}{An integer or character string specifying the data aggregation period. Valid values are:
 \itemize{
 \item \code{0} or \code{"daily"} (default): Daily data.
-\item \code{5} or \code{"weekly"}: Weekly data.
+\item \code{7} or \code{"weekly"}: Weekly data.
 \item \code{30} or \code{"monthly"}: Monthly data.
 \item \code{91} or \code{"quarterly"}: Quarterly data.
 \item \code{365} or \code{"yearly"}: Yearly data.
@@ -34,7 +49,7 @@ BRVM_get(ticker, ...)
 A data frame containing the historical data for the specified tickers. The columns of the data frame are \code{Date}, \code{Open}, \code{High}, \code{Low}, \code{Close}, \code{Volume}, and optionally \code{Ticker} if \code{output_format} is "by_col". If no data is available for a given ticker in the specified date range, a message is printed to the console, and that ticker is not included in the output.
 }
 \description{
-This function retrieves historical price and volume data for one or more securities listed on the BRVM (Bourse Régionale des Valeurs Mobilières) market.
+This function retrieves historical price and volume data for one or more securities listed on the BRVM (Bourse Regionale des Valeurs Mobilieres) market.
 }
 \details{
 This function will get data of the companies listed on the BVRM exchange through the sikafinance site. The function
@@ -54,6 +69,12 @@ A progress bar is displayed in the console to show the download progress for eac
 }
 \examples{
 \dontrun{
+
+library(lubridate)
+library(rlang)
+library(httr2)
+library(dplyr)
+library(stringr)
 # Get daily data for a single ticker
 daily_data <- BRVM_get("SGBCI", from = "2023-01-01", to = "2023-03-31")
 
@@ -73,22 +94,15 @@ Other Data Retrieval:
 \code{\link{BRVM_bySector}()},
 \code{\link{BRVM_cap}()},
 \code{\link{BRVM_company_rank}()},
-\code{\link{BRVM_index}()},
-\code{\link{BRVM_index_stock}()},
-\code{\link{BRVM_market_activity}()},
 \code{\link{BRVM_plot}()},
+\code{\link{BRVM_rank}()},
 \code{\link{BRVM_stock_market}()},
-\code{\link{BRVM_ticker_desc}()},
-\code{\link{company_cap}()},
-\code{\link{company_country}()},
-\code{\link{company_nbrank}()},
-\code{\link{company_sector}()},
-\code{\link{company_traded_val}()}
+\code{\link{company_sector}()}
 }
 \author{
 Koffi Frederic SESSIE
 
-Olabiyi Aurel Géoffroy ODJO
+Olabiyi Aurel Geoffroy ODJO
 }
 \concept{Data Retrieval}
 \concept{Sikafinance}

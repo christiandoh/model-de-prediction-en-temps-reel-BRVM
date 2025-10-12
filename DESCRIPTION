@@ -1,7 +1,7 @@
 Package: BRVM
 Type: Package
 Title: Retrieve Historical Data of Companies Listed on the 'BRVM' Stock Exchange
-Version: 5.3.1
+Version: 5.3.2
 Authors@R: c(
     person("Sessie","Koffi Frederic", email = "koffisessie@gmail.com",
             role = c("aut","cre","cph")),
@@ -17,11 +17,11 @@ License: MIT + file LICENSE
 Encoding: UTF-8
 Roxygen: list(markdown = TRUE)
 Imports: 
+    methods,
     magrittr,
     rlang (>= 0.4.11),
     tidyr,
     dplyr,
-    gsheet,
     httr,
     httr2,
     tseries,
@@ -43,5 +43,5 @@ Suggests:
     roxygen2,
     testthat (>= 3.0.0)
 VignetteBuilder: knitr
-RoxygenNote: 7.3.1
+RoxygenNote: 7.3.3
 Config/testthat/edition: 3

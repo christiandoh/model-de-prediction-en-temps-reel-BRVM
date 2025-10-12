@@ -1,13 +1,13 @@
 #' Get historical data for BRVM securities
 #'
 #' @description
-#' This function retrieves historical price and volume data for one or more securities listed on the BRVM (Bourse Régionale des Valeurs Mobilières) market.
+#' This function retrieves historical price and volume data for one or more securities listed on the BRVM (Bourse Regionale des Valeurs Mobilieres) market.
 #'
 #' @family Data Retrieval
 #' @family Sikafinance
 #'
 #' @author Koffi Frederic SESSIE
-#' @author Olabiyi Aurel Géoffroy ODJO
+#' @author Olabiyi Aurel Geoffroy ODJO
 #'
 #'
 #' @seealso `BRVM_tickers()`
@@ -41,7 +41,7 @@
 #' @param Period An integer or character string specifying the data aggregation period. Valid values are:
 #' \itemize{
 #'   \item \code{0} or \code{"daily"} (default): Daily data.
-#'   \item \code{5} or \code{"weekly"}: Weekly data.
+#'   \item \code{7} or \code{"weekly"}: Weekly data.
 #'   \item \code{30} or \code{"monthly"}: Monthly data.
 #'   \item \code{91} or \code{"quarterly"}: Quarterly data.
 #'   \item \code{365} or \code{"yearly"}: Yearly data.
@@ -52,8 +52,22 @@
 #'
 #' @return A data frame containing the historical data for the specified tickers. The columns of the data frame are \code{Date}, \code{Open}, \code{High}, \code{Low}, \code{Close}, \code{Volume}, and optionally \code{Ticker} if `output_format` is "by_col". If no data is available for a given ticker in the specified date range, a message is printed to the console, and that ticker is not included in the output.
 #'
+#' @importFrom methods setGeneric setMethod
+#' @importFrom httr2 req_body_json req_perform request resp_body_json
+#' @importFrom dplyr group_by summarise as_tibble
+#' @importFrom lubridate parse_date_time
+#' @importFrom rlang abort
+#' @importFrom stringr str_sub
+#'
+#'
 #' @examples
 #' \dontrun{
+#'
+#' library(lubridate)
+#' library(rlang)
+#' library(httr2)
+#' library(dplyr)
+#' library(stringr)
 #' # Get daily data for a single ticker
 #' daily_data <- BRVM_get("SGBCI", from = "2023-01-01", to = "2023-03-31")
 #'
@@ -63,12 +77,17 @@
 #' # Get weekly data for all indexes for the last year
 #' all_indexes_weekly <- BRVM_get("ALL INDEXES", Period = "weekly", from = Sys.Date() - 365)
 #' }
-setGeneric("BRVM_get", function(ticker,...) standardGeneric("BRVM_get"))
+#' @rdname BRVM_get
+#' @export
+setGeneric("BRVM_get", function(ticker = "ALL",Period = "daily",from = Sys.Date() - 89,to = Sys.Date(),output_format = c("by_col","by_row")) standardGeneric("BRVM_get"))
+
+
+#' @rdname BRVM_get
 #' @export
 setMethod(
     "BRVM_get",
     signature(ticker = "character"),
-    function(ticker = "ALL",Period = 0,from = Sys.Date() - 89,to = Sys.Date(),output_format = c("by_col","by_row")) {
+    function(ticker = "ALL",Period = "daily",from = Sys.Date() - 89,to = Sys.Date(),output_format = c("by_col","by_row")) {
         tryCatch({
 
             first_date <- lubridate::parse_date_time(from, orders = "ymd")
@@ -80,7 +99,7 @@ setMethod(
                 Period = switch(
                     tolower(Period),
                     daily = 0,
-                    weekly = 5,
+                    weekly = 7,
                     monthly = 30,
                     quarterly = 91,
                     yearly = 365
@@ -100,7 +119,7 @@ setMethod(
             tryCatch(
                 {
                 if (!ssl_verifypeer) { # pour les ordinateurs qui n'ont pas le SSL a jours ou a jours par rapport aux ssl du serveur
-                    message("⚠️ This request is not protected.
+                    message("This request is not protected.
                                     SSL verification is disabled.
                                     The request can be intercepted (MITM),
                                     data can be stolen or modified,
@@ -108,7 +127,7 @@ setMethod(
                                     Avoid disabling SSL verification unless you fully trust the server and your internet connection.")
                 }
 
-                ticker <- unique(toupper(ticker))
+                ticker <- unique(ticker)
                 market_tickers = BRVM_tickers()
                 all_tickers = market_tickers@List
 
@@ -142,7 +161,7 @@ setMethod(
 
                 nb_merging = 0 # nombre de fusion fait
 
-                    if (as.numeric(Period) %in% c(0, 5, 30, 91, 365)){
+                    if (as.numeric(Period) %in% c(0, 7, 30, 91, 365)){
                         #Tick = ticker[1]
                         #Period = 0
                         for (Tick in ticker) {
@@ -151,33 +170,34 @@ setMethod(
                             asset_data <- as.data.frame(matrix(NA, ncol = 6, nrow = 0))
                             names(asset_data) <- c("Date", "Open", "High", "Low", "Close", "Volume")
 
-                            range_period = seq(from = first_date, to = end_date, by = "80 day")
+                            range_period = seq(from = first_date, to = end_date, by = "85 day")
                             ifelse(!(end_date %in% range_period),
                                 range_period <- c(range_period,end_date),range_period)
 
                             range_period_length = length(range_period)
-                            range_period_length_adjusted = range_period_length - 1 # parcourir jusqua l'avant derniere date
+                            range_period_length_adjusted = range_period_length - 1 # parcourir jusqu'a l'avant derniere date
 
-                            for(i in 1:range_period_length_adjusted){  # parcourir les intervalles de période
+                            for(i in 1:range_period_length_adjusted) {  # parcourir les intervalles de periode
 
+                                # i = 1
                                 from_date <- as.Date.POSIXct(range_period[i])
                                 to_date <- as.Date.POSIXct(range_period[i+1])
 
-                                # barre defilement
-                                #i = 16
-                                progress_bar_dim = 30
-                                progress_value = i/range_period_length_adjusted
-                                barre <- paste0(strrep("=", round(progress_value * progress_bar_dim)), strrep(" ",round((1 - progress_value) * progress_bar_dim)))
-                                message(sprintf("\r%s [%s] %3d%%", Tick, barre, round(progress_value * 100)))
-                                #flush.console()
-                                # Sys.sleep(0.1)
-                                ##################
+                                base_request <- request(market_tickers@Market_data_url) %>%
+                                    req_method("POST") %>%
+                                    req_headers(
+                                        "User-Agent" = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:144.0) Gecko/20100101 Firefox/144.0",
+                                        "Accept" = "*/*",
+                                        "Accept-Language" = "fr,fr-FR;q=0.8,en-US;q=0.5,en;q=0.3",
+                                        "Origin" = "https://www.sikafinance.com",
+                                        "Connection" = "keep-alive",
+                                        "Referer" = paste0("https://www.sikafinance.com/marches/historiques/", Tick),
+                                        "Sec-Fetch-Dest" = "empty",
+                                        "Sec-Fetch-Mode" = "cors",
+                                        "Sec-Fetch-Site" = "same-origin"
+                                    )
 
-                                base_request <- request(market_tickers@Market_data_url)
-
-                                if (!ssl_verifypeer) { # pour les ordinateurs qui n'ont pas le SSL a jours ou qui sont a jours par rapport aux ssl du serveur
-                                    base_request <- req_options(base_request, ssl_verifypeer = 0)
-                                }
+                                Sys.sleep(1)
 
                                 my_data <- base_request %>%
                                     req_body_json(list('ticker'= Tick,
@@ -191,34 +211,32 @@ setMethod(
                                     my_data <- as.data.frame(my_data$lst)
                                     asset_data <- rbind(asset_data, my_data)
                                 }
-
                             }
 
-                            if (ncol(asset_data)==6 && nrow(asset_data)!=0) {
+                            if (ncol(asset_data) == 6 && nrow(asset_data) > 0) {
 
                                 asset_data$Date<-as.Date.character(asset_data$Date, format = "%d/%m/%Y")
 
                                 ifelse (any(duplicated(asset_data$Date)),
-                                        asset_data<-asset_data%>%
-                                            dplyr::group_by(Date)%>%
-                                            summarise(Open = mean(Open),
-                                                      High = mean(High),
-                                                      Low = mean(Low),
-                                                      Close = mean(Close),
-                                                      Volume = mean(Volume)),
-                                        asset_data)
+                                        asset_data <- asset_data %>% dplyr::distinct(),asset_data)
+                                        # dplyr::group_by(Date)%>%
+                                        #     dplyr::summarise(Open = mean(Open),
+                                        #                      High = mean(High),
+                                        #                      Low = mean(Low),
+                                        #                      Close = mean(Close),
+                                        #                      Volume = mean(Volume))
 
-                                message(paste0("We obtained ",TickName,  " data from ",
+                                message(paste0("\U2705 We obtained ",TickName,  " data from ",
                                                min(asset_data$Date),
                                                " to ",
-                                               max(asset_data$Date)," \U2705"))
+                                               max(asset_data$Date)))
 
                                 if(output_format[1] == "by_col"){ # agencer suivant les colonnes
                                     asset_data$Ticker <- TickName
-                                    ticker_data <- rbind(ticker_data, asset_data)
-
-                                    if (length(unique(ticker_data$Ticker)) == 1){
-                                        ticker_data = ticker_data[, -7] # enlever colonne ticker
+                                    if (nb_merging == 0){
+                                        ticker_data <- asset_data # initialisation
+                                    } else if(nb_merging > 0){
+                                        ticker_data <- rbind(ticker_data, asset_data)
                                     }
                                 } else if(output_format[1] == "by_row"){ # agencer suivant les lignes
 
@@ -233,11 +251,11 @@ setMethod(
                                     } else if(nb_merging > 0){
                                         ticker_data <- merge(ticker_data, asset_data,by = asset_data_names[1],all = TRUE)
                                     }
-                                    nb_merging = nb_merging + 1
                                 }
+                                nb_merging = nb_merging + 1
 
                             } else {
-                                message(paste0(TickName," data aren't available between ",
+                                message(paste0("\u274C ",TickName," data aren't available between ",
                                                first_date,
                                                " and ",
                                                end_date))
@@ -245,12 +263,21 @@ setMethod(
 
                         }
 
+
+                        if(is.data.frame(ticker_data)){
+                            if (length(unique(ticker_data$Ticker)) == 1){
+                                ticker_data = ticker_data[, -7] # enlever colonne ticker
+                            }
+
+                            ticker_data = ticker_data %>% dplyr::arrange(Date)
+                        }
+
                         return(ticker_data) # final output
 
                     }
 
                     else {
-                        message("Choose the best period between 0, 5, 30, 91 and 365")
+                        message("Choose the best period between 0, 7, 30, 91 and 365")
                     }
 
                 },

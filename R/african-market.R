@@ -1,24 +1,41 @@
-#' S4 Class african_market
+#' African Market Class
 #'
-#' A class that represents market data with its indexes, shares and Bonds.
+#' @description
+#' An S4 class designed to represent and store structured information
+#' about African financial markets, including metadata, trading instruments,
+#' and market data sources.
 #'
-#' @slot Market_short_name Abbreviated name of the market (character)
-#' @slot Market_full_name Full name of the market (character)
-#' @slot Market_url URL of the market (character)
-#' @slot List List of tickers (character)
-#' @slot Indexes Index data (data.frame)
-#' @slot Shares Share data (data.frame)
-#' @slot Bonds Bond data (data.frame)
+#' @slot Market_short_name A short abbreviation of the market name (e.g. "BRVM").
+#' @slot Market_full_name The full name of the market (e.g. "Bourse Régionale des Valeurs Mobilières").
+#' @slot Official_url The official website of the market.
+#' @slot Market_url A general URL for accessing market information.
+#' @slot Market_data_url A URL pointing to detailed market data.
+#' @slot List A string summarizing available lists of instruments.
+#' @slot ListShares A string or URL referencing the list of shares.
+#' @slot ListIndexes A string or URL referencing the list of indexes.
+#' @slot ListBonds A string or URL referencing the list of bonds.
+#' @slot Indexes A data frame containing index-level information.
+#' @slot Shares A data frame containing share-level information.
+#' @slot Bonds A data frame containing bond-level information.
+#' @slot Ticker_full_name The full name corresponding to a ticker symbol.
+#'
+#' @return
+#' An object of class \code{african_market}.
 #'
 #' @author Koffi Frederic SESSIE
-#' @author Olabiyi Aurel Géoffroy ODJO
+#' @author Olabiyi Aurel Geoffroy ODJO
 #'
-#' @export
+#' @importFrom methods setGeneric setMethod
+#' @importFrom methods new slot slotNames
+#' @importFrom utils capture.output
+#'
+#' @exportClass african_market
 setClass(
     "african_market",
     slots = c(
         Market_short_name = "character",
         Market_full_name  = "character",
+        Official_url        = "character",
         Market_url        = "character",
         Market_data_url   = "character",
         List              = "character",
@@ -33,6 +50,7 @@ setClass(
     prototype = list(
         Market_short_name = "",
         Market_full_name  = "",
+        Official_url        = "",
         Market_url        = "",
         Market_data_url   = "",
         List              = "",
@@ -48,22 +66,46 @@ setClass(
 
 
 
-
 #' @title Constructor for the 'african_market' S4 class
 #'
-#' @description Creates an object of the S4 class 'african_market' to represent data for an African stock market.
+#' @description
+#' Creates an object of class \code{african_market}, which stores metadata and financial
+#' data related to an African stock market. This includes basic identifiers, official URLs,
+#' and structured data frames for indexes, shares, and bonds.
 #'
-#' @param Market_short_name A character string for the abbreviated name of the market.
-#' @param Market_full_name A character string for the full name of the market.
-#' @param Market_url A character string for the URL of the market.
-#' @param List A character vector of the market's tickers.
-#' @param Indexes A data frame containing data for the market's indexes.
-#' @param Shares A data frame containing data for the market's shares.
-#' @param Bonds A data frame containing data for the market's bonds.
+#' @param Market_short_name A character string for the abbreviated name of the market (e.g. "BRVM").
+#' @param Market_full_name A character string for the full name of the market (e.g. "Bourse Régionale des Valeurs Mobilières").
+#' @param Official_url A character string for the official website of the market.
+#' @param Market_url A character string for the general URL of the market.
+#' @param Market_data_url A character string for the URL to access detailed market data.
+#' @param List A character string describing the types of lists available (e.g. "Shares, Indexes, Bonds").
+#' @param ListShares A character string or URL pointing to the list of shares.
+#' @param ListIndexes A character string or URL pointing to the list of indexes.
+#' @param ListBonds A character string or URL pointing to the list of bonds.
+#' @param Indexes A data frame containing information on market indexes.
+#' @param Shares A data frame containing information on market shares.
+#' @param Bonds A data frame containing information on market bonds.
+#' @param Ticker_full_name A character string for the full name associated with a ticker symbol.
+#'
+#' @details
+#' This constructor initializes an S4 object of class \code{african_market},
+#' which is useful for storing structured data and metadata for African financial markets.
+#' It can serve as the backbone for functions that fetch, analyze, and visualize market data.
+#'
+#' @importFrom methods new setGeneric setMethod
+#'
+#' @return An object of class \code{african_market}.
+#'
+#' @family African Markets
+#' @seealso \code{\link{setClass}}, \code{\link{african_market}}
+#'
+#' @rdname african_market
+#' @export
 #' @return A new S4 object of class 'african_market'.
 setGeneric("african_market",
            function(Market_short_name,
                     Market_full_name,
+                    Official_url,
                     Market_url,
                     Market_data_url,
                     List,
@@ -74,10 +116,14 @@ setGeneric("african_market",
                     Shares,
                     Bonds,
                     Ticker_full_name) standardGeneric("african_market"))
+
+
+#' @rdname african_market
 #' @export
 setMethod("african_market",
           signature(Market_short_name = "character",
                     Market_full_name = "character",
+                    Official_url = "character",
                     Market_url = "character",
                     Market_data_url = "character",
                     List = "character",
@@ -90,6 +136,7 @@ setMethod("african_market",
                     Ticker_full_name = "character"),
           function(Market_short_name = "",
                    Market_full_name  = "",
+                   Official_url = "",
                    Market_url = "",
                    Market_data_url = "",
                    List = "",
@@ -104,6 +151,7 @@ setMethod("african_market",
             new("african_market",
                 Market_short_name = Market_short_name,
                 Market_full_name  = Market_full_name,
+                Official_url = Official_url,
                 Market_url        = Market_url,
                 Market_data_url = Market_data_url,
                 List              = List,
@@ -150,11 +198,15 @@ setMethod("$", "african_market", function(x, name) {
 #' Show method for african_market
 #'
 #' @param object An object of class african_market.
-#' @export
+#'
+#' @importFrom methods new slot slotNames
+#' @importFrom utils capture.output
+#'
 setMethod("show", "african_market", function(object) {
     output = c(
         paste0("\033[31mMARKET NAME : ", object@Market_full_name,
                " (", object@Market_short_name, ").\033[0m"),
+        paste0("Official URL : ",object@Official_url),
         paste0("============================ ",
                object@Market_short_name,
                " TICKERS [n = ", length(object@List), "] ============================"),

@@ -13,6 +13,7 @@
 #' The BRVM (Bourse Régionale des Valeurs Mobilières) is a regional stock exchange serving the
 #' West African Economic and Monetary Union (WAEMU / UEMOA).
 #'
+#' @importFrom methods setGeneric setMethod
 #' @import rvest
 #' @import httr2
 #' @import tidyr
@@ -45,7 +46,13 @@
 #' # Print object
 #' brvm_tickers
 #' }
+#'
+#' @rdname BRVM_tickers
+#' @export
 setGeneric("BRVM_tickers", function(object) standardGeneric("BRVM_tickers" ))
+
+
+#' @rdname BRVM_tickers
 #' @export
 setMethod("BRVM_tickers", signature(object = "missing"), function(object) {
     tryCatch(

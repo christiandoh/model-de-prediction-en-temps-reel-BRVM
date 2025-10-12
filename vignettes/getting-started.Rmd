@@ -29,5 +29,5 @@ Lets take a look at a simple function that will get any n number of records base
 on whether they are 'Top' or 'Bottom' ranked.
 
 ```{r brvm_rank}
-BRVM_rank("Top", 10)
+BRVM_rank("Top",10)
 ```

@@ -2,24 +2,31 @@
 % Please edit documentation in R/brvm_company_sector.R
 \name{company_sector}
 \alias{company_sector}
-\title{Company's sector - To know the sector of a given company}
+\alias{company_sector,character-method}
+\title{Company's sector — Retrieve the sector of a given company}
 \usage{
 company_sector(company)
+
+\S4method{company_sector}{character}(company)
 }
 \arguments{
-\item{company}{The name of company listed on the BRVM stock exchange}
+\item{company}{A character string specifying the ticker of a company listed on the BRVM stock exchange.}
 }
 \value{
-"character"
+A character string representing the sector of the company if a single match is found,
+or a data frame if multiple matches are found.
 }
 \description{
-It receives one company listed on the BRVM stock exchange,
-Turn to  upper case your input by using \code{toupper()}  and returns informations about the company's sector.
+This function takes the name (ticker) of a company listed on the BRVM stock exchange,
+converts it to uppercase using \code{toupper()}, and returns information about the company's sector.
+
+If the company is not found, a message is displayed indicating that the company does not exist.
+If a single match is found, the function returns the corresponding sector as a character string.
+If multiple matches are found, it returns a data frame containing both tickers and their sectors.
 }
 \examples{
 company_sector("BICC")
 company_sector("SNTS")
-
 
 }
 \seealso{
@@ -28,39 +35,25 @@ Other Data Retrieval:
 \code{\link{BRVM_cap}()},
 \code{\link{BRVM_company_rank}()},
 \code{\link{BRVM_get}()},
-\code{\link{BRVM_index}()},
-\code{\link{BRVM_index_stock}()},
-\code{\link{BRVM_market_activity}()},
 \code{\link{BRVM_plot}()},
-\code{\link{BRVM_stock_market}()},
-\code{\link{BRVM_ticker_desc}()},
-\code{\link{company_cap}()},
-\code{\link{company_country}()},
-\code{\link{company_nbrank}()},
-\code{\link{company_traded_val}()}
+\code{\link{BRVM_rank}()},
+\code{\link{BRVM_stock_market}()}
 
 Other BRVM: 
-\code{\link{BRVM.index}()},
 \code{\link{BRVM_cap}()},
 \code{\link{BRVM_company_cap}()},
 \code{\link{BRVM_company_rank}()},
 \code{\link{BRVM_company_url}()},
-\code{\link{BRVM_index}()},
-\code{\link{BRVM_index_stock}()},
-\code{\link{BRVM_market_activity}()},
 \code{\link{BRVM_plot}()},
+\code{\link{BRVM_rank}()},
 \code{\link{BRVM_stock_market}()},
-\code{\link{BRVM_ticker_desc}()},
-\code{\link{BRVM_traded_val}()},
-\code{\link{company_cap}()},
-\code{\link{company_country}()},
-\code{\link{company_nbrank}()},
-\code{\link{company_traded_val}()},
 \code{\link{normality_test}()},
 \code{\link{stationarity_test}()}
 }
 \author{
 Koffi Frederic SESSIE
+
+Olabiyi Aurel Geoffroy ODJO
 }
 \concept{BRVM}
 \concept{Data Retrieval}

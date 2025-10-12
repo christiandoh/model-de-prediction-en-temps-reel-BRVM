@@ -2,7 +2,7 @@
 .onAttach <- function(libname, pkgname) {
     msg <- paste0(
         "\n",
-        "== Welcome to BRVM ================================================================",
+        "== Welcome to BRVM (xgenR) ================================================================",
         "\nIf you find this package useful, please leave a star: ",
         "\n   https://github.com/Koffi-Fredysessie/BRVM",
         "\n",
@@ -15,3 +15,4 @@
 
     packageStartupMessage(msg)
 }
+

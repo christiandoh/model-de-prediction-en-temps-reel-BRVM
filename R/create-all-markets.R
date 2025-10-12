@@ -4,9 +4,17 @@
 #' @return A list of objects of type \code{market_data} or derived classes
 #'
 #' @author Koffi Frederic SESSIE
-#' @author Olabiyi Aurel Géoffroy ODJO
+#' @author Olabiyi Aurel Geoffroy ODJO
 #'
+#' @importFrom methods setGeneric setMethod
+#'
+#' @rdname CREATE_ALL_MARKETS
+#' @export
 setGeneric("CREATE_ALL_MARKETS", function(object) standardGeneric("CREATE_ALL_MARKETS"))
+
+
+
+#' @rdname CREATE_ALL_MARKETS
 #' @export
 setMethod("CREATE_ALL_MARKETS", signature(object = "missing"), function(object) {
     tryCatch(
@@ -14,9 +22,12 @@ setMethod("CREATE_ALL_MARKETS", signature(object = "missing"), function(object) 
             list(
                 BRVM_MARKET = african_market(
                     Market_short_name = "BRVM",
-                    Market_full_name = "Bourse Régionale des Valeurs Mobilières",
+                    Market_full_name = "BOURSE REGIONALE DES VALEURS MOBILIERES",
+                    Official_url = "https://www.brvm.org/",
                     Market_url = "https://www.sikafinance.com/",
-                    Market_data_url = "https://www.sikafinance.com/api/general/GetHistos",
+                    Market_data_url = c(
+                        "https://www.sikafinance.com/api/general/GetHistos"
+                    ),
                     List = "",
                     ListShares = "",
                     ListIndexes = "",

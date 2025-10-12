@@ -2,9 +2,12 @@
 % Please edit documentation in R/brvm-ticker.R
 \name{BRVM_tickers}
 \alias{BRVM_tickers}
+\alias{BRVM_tickers,missing-method}
 \title{Get BRVM Tickers}
 \usage{
 BRVM_tickers(object)
+
+\S4method{BRVM_tickers}{missing}(object)
 }
 \arguments{
 \item{object}{An object of class \code{missing}, indicating this method is a constructor that does not require an input object.}
@@ -31,6 +34,9 @@ dput(ticks$Ticker) ## Returns the name of all tickers
 
 \donttest{
 # Retrieve BRVM tickers
+library(rvest)
+library(httr2)
+library(tidyr)
 brvm_tickers <- BRVM_tickers()
 
 # Display shares
@@ -42,13 +48,14 @@ brvm_tickers$List
 # Print object
 brvm_tickers
 }
+
 }
 \author{
 Koffi Frederic SESSIE
 
-Olabiyi Aurel Géoffroy ODJO
+Olabiyi Aurel Geoffroy ODJO
 
-Oudouss Diakité Abdoul
+Oudouss Diakite Abdoul
 
 Steven P. Sanderson II, MPH
 }

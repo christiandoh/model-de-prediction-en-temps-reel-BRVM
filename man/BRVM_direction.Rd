@@ -2,13 +2,19 @@
 % Please edit documentation in R/brvm-up-down.R
 \name{BRVM_direction}
 \alias{BRVM_direction}
+\alias{BRVM_direction,character,numeric-method}
 \title{BRVM Rank}
 \usage{
-BRVM_direction(.up_or_down = "Up")
+BRVM_direction(.up_or_down = "Up", N = 10)
+
+\S4method{BRVM_direction}{character,numeric}(.up_or_down = "Up", N = 10)
 }
 \arguments{
 \item{.up_or_down}{This is a character string set to "Up" It can either be
 'Up' or 'Down'.}
+
+\item{N}{An integer specifying the number of companies to return.
+Default is 10.}
 }
 \value{
 A tibble
@@ -23,14 +29,17 @@ of the BRVM tickers.
 }
 \examples{
 \donttest{
-BRVM_direction("Up")
+BRVM_direction("Up", 10)
+BRVM_direction("Down", 5)
 }
 
 }
 \author{
 Koffi Frederic SESSIE
 
-Oudouss Diakité Abdoul
+Olabiyi Aurel Geoffroy ODJO
+
+Oudouss Diakite Abdoul
 
 Steven P. Sanderson II, MPH
 }

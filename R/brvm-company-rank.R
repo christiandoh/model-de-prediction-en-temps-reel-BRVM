@@ -28,6 +28,7 @@
 #' @family Data Retrieval
 #' @family BRVM
 #'
+#' @importFrom methods setGeneric setMethod
 #' @import rvest dplyr
 #'
 #' @author Koffi Frederic SESSIE
@@ -58,8 +59,13 @@
 #' dplyr::arrange(desc(percent_change))
 #' comp.rank
 #'}
-
+#' @rdname BRVM_company_rank
+#' @export
 setGeneric("BRVM_company_rank", function(object) standardGeneric("BRVM_company_rank" ))
+
+
+
+#' @rdname BRVM_company_rank
 #' @export
 setMethod("BRVM_company_rank", signature(object = "missing"), function(object) {
   tryCatch(

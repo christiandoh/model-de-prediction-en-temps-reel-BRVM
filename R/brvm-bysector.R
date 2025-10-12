@@ -1,10 +1,12 @@
+
 #' BRVM By Sector
 #'
 #' @family Sector
 #' @family Data Retrieval
 #'
 #' @author Koffi Frederic SESSIE
-#' @author Oudouss Diakité Abdoul
+#' @author Olabiyi Aurel Geoffroy ODJO
+#' @author Oudouss Diakite Abdoul
 #' @author Steven P. Sanderson II, MPH
 #'
 #' @details This function will take in a vector of sectors provided by the end
@@ -14,6 +16,7 @@
 #'
 #' @param .sectors A vector of sectors you wish to have returned.
 #'
+#' @importFrom methods setGeneric setMethod
 #' @importFrom xml2 read_html
 #' @examples
 #'\donttest{
@@ -23,7 +26,7 @@
 #' library(rvest)
 #' library(dplyr)
 #'
-#' sectors <- c("Industry","Administration","PUblic service", "AUtr", "FINANCE",
+#' sectors <- c("Industriels","Administration","PUblic service", "AUtr", "SeRVICES FINaNCIERS",
 #'             "distribution", 25)
 #' BRVM_bySector(.sectors = sectors)
 #' BRVM_bySector(.sectors = "All")
@@ -33,11 +36,14 @@
 #' @return
 #' A tibble
 #'
+#' @rdname BRVM_bySector
 #' @export
-#'
+setGeneric("BRVM_bySector", function(.sectors = "ALL") standardGeneric("BRVM_bySector" ))
 
-BRVM_bySector <- function(.sectors=NULL){
-  sector <- unique(str_to_title(.sectors))
+#' @rdname BRVM_bySector
+#' @export
+setMethod("BRVM_bySector", signature(.sectors="character"), function(.sectors) {
+  sector <- unique(toupper(.sectors))
   # Check input parameters ----
   if (length(sector) < 1){
     rlang::abort(
@@ -46,47 +52,49 @@ BRVM_bySector <- function(.sectors=NULL){
       Or simply enter .symbol = c('All') to get all sectors information"
     )
   }
-  ifelse (sector == "All",
-          sector<- c("Agriculture", "Industry", "Distribution", "Finance", "Transport", "Public services", "Other"),
-          sector)
-  
+
   # Scrape information about Ticker, their name and sector
   url.all<-c("https://www.richbourse.com/common/apprendre/liste-societes",
              "https://www.richbourse.com/common/apprendre/liste-societes?page=2",
              "https://www.richbourse.com/common/apprendre/liste-societes?page=3")
-  
+
   tryCatch(
     {
       All.sector<-as.data.frame(matrix(NA, ncol = 3, nrow = 0))
       for (elem in url.all){
         brvm.sect <- read_html(elem) %>% html_elements('table') %>% html_table()
         All.sector <-rbind(All.sector, brvm.sect[[1]][-c(1,5)])
-        
+
       }
-      
+
       if(ncol(All.sector)!= 3){
         All.sector = All.sector[, -4]
       }
-      
+
       names(All.sector) <- c("Company name", "Ticker", "Sector")
-      All.sector$Sector<-str_replace(All.sector$Sector, "Industrie", "Industry")
-      All.sector$Sector<-str_replace(All.sector$Sector, "Finances", "Finance")
-      All.sector$Sector<-str_replace(All.sector$Sector, "Autres", "Other")
-      All.sector$Sector<-str_replace(All.sector$Sector, "Services publics", "Public services")
-      
-      ##English
+      All.sector$Sector[startsWith(All.sector$Sector,"Consommation discr")] = "CONSOMMATION DISCRETIONNAIRE"
+      All.sector$Sector[endsWith(All.sector$Sector,"communications")] = "TELECOMMUNICATIONS"
+      All.sector$Sector <- toupper(All.sector$Sector)
+
+
       All_sector <- unique(All.sector$Sector)
-      
+
+      ifelse (sector == "ALL",
+              sector<- All_sector,
+              sector)
+
+      ##English
+
       #### Create a definitive sector vector
       sector_vec<-NULL
-      
+
       ## Change to upper case the first letter of each sector
       ##And filter sector in sector list
       for (Sect in sector) {
         if (Sect %in% All_sector) {
           sector_vec<-append(sector_vec, Sect)}
       }
-      
+
       # Check input parameters after filtering ----
       if (length(sector_vec) < 1){
         rlang::abort(
@@ -95,7 +103,7 @@ BRVM_bySector <- function(.sectors=NULL){
       Or simply enter .symbol = c('All') to get all sectors information"
         )
       }
-      
+
       ###Scrape daily quote data from BRVM exchange
       # tryCatch(
       #   {
@@ -119,10 +127,10 @@ BRVM_bySector <- function(.sectors=NULL){
         "Open",
         "Close",
         "Change (%)")
-      
+
       ##Join both data by Ticker
       Brvm.all<-left_join(Brvm.all, All.sector[-1], by ="Ticker")
-      
+
       if (length(sector_vec) == 7){
         ###That means all sector
         return(Brvm.all)
@@ -137,7 +145,7 @@ BRVM_bySector <- function(.sectors=NULL){
           "Close",
           "Change (%)",
           "Sector")
-        
+
         for(.elem in sector_vec) {
           dt.sector<-dplyr::filter(Brvm.all, Sector == .elem)
           if(nrow(dt.sector)>1){
@@ -145,12 +153,12 @@ BRVM_bySector <- function(.sectors=NULL){
           } else {
             message(paste0("There is ", nrow(dt.sector), " company that belongs to ", .elem, "'s sector"))
           }
-          message(dt.sector[-c(2,8)])
+          #message(dt.sector[-c(2,8)])
           sector.data<-rbind(sector.data, dt.sector)
         }
         return(sector.data)
       }
-      
+
     },
     error = function(e) {
       message("Make sure you have an active internet connection")
@@ -159,5 +167,6 @@ BRVM_bySector <- function(.sectors=NULL){
       message("Make sure you have an active internet connection")
     }
   )
-  
-}
+
+})
+

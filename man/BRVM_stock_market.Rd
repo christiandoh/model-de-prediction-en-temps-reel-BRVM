@@ -2,9 +2,12 @@
 % Please edit documentation in R/brvm-boc.R
 \name{BRVM_stock_market}
 \alias{BRVM_stock_market}
+\alias{BRVM_stock_market,character-method}
 \title{BRVM Official Quotation reviews}
 \usage{
 BRVM_stock_market(.weekday)
+
+\S4method{BRVM_stock_market}{character}(.weekday)
 }
 \arguments{
 \item{.weekday}{A quoted date, ie. "2022-01-31" or "2022/01/31". The date must
@@ -26,7 +29,7 @@ library(formattable)
 library(stringr)
 
 BRVM_stock_market("2022-04-25")
-BRVM_stock_market("2021-03-25")
+BRVM_stock_market("2025-05-22")
 }
 }
 \seealso{
@@ -35,39 +38,25 @@ Other Data Retrieval:
 \code{\link{BRVM_cap}()},
 \code{\link{BRVM_company_rank}()},
 \code{\link{BRVM_get}()},
-\code{\link{BRVM_index}()},
-\code{\link{BRVM_index_stock}()},
-\code{\link{BRVM_market_activity}()},
 \code{\link{BRVM_plot}()},
-\code{\link{BRVM_ticker_desc}()},
-\code{\link{company_cap}()},
-\code{\link{company_country}()},
-\code{\link{company_nbrank}()},
-\code{\link{company_sector}()},
-\code{\link{company_traded_val}()}
+\code{\link{BRVM_rank}()},
+\code{\link{company_sector}()}
 
 Other BRVM: 
-\code{\link{BRVM.index}()},
 \code{\link{BRVM_cap}()},
 \code{\link{BRVM_company_cap}()},
 \code{\link{BRVM_company_rank}()},
 \code{\link{BRVM_company_url}()},
-\code{\link{BRVM_index}()},
-\code{\link{BRVM_index_stock}()},
-\code{\link{BRVM_market_activity}()},
 \code{\link{BRVM_plot}()},
-\code{\link{BRVM_ticker_desc}()},
-\code{\link{BRVM_traded_val}()},
-\code{\link{company_cap}()},
-\code{\link{company_country}()},
-\code{\link{company_nbrank}()},
+\code{\link{BRVM_rank}()},
 \code{\link{company_sector}()},
-\code{\link{company_traded_val}()},
 \code{\link{normality_test}()},
 \code{\link{stationarity_test}()}
 }
 \author{
 Koffi Frederic SESSIE
+
+Olabiyi Aurel Geoffroy ODJO
 }
 \concept{BRVM}
 \concept{Data Retrieval}

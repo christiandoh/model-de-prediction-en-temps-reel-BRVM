@@ -5,6 +5,7 @@
 #' @family Data Retrieval
 #' @family BRVM
 #' @author Koffi Frederic SESSIE
+#' @author Olabiyi Aurel Geoffroy ODJO
 #'
 #' @param .weekday A quoted date, ie. "2022-01-31" or "2022/01/31". The date must
 #' be in ymd format "YYYY-MM-DD" or "YYYY/MM/DD". Must not be a weekend or a holiday
@@ -12,14 +13,14 @@
 #' @return
 #' A formatabble table
 #'
-#' @export
+#' @importFrom methods setGeneric setMethod
+#' @importFrom formattable color_tile formattable formatter icontext style
+#' @importFrom httr content POST
+#' @importFrom lubridate parse_date_time
+#' @importFrom rvest html_table html_elements
+#' @importFrom stringr str_sub
+#' @importFrom timeDate isWeekday
 #'
-#'@importFrom formattable color_tile formattable formatter icontext style
-#'@importFrom httr content POST
-#'@importFrom lubridate parse_date_time
-#'@importFrom rvest html_table html_elements
-#'@importFrom stringr str_sub
-#'@importFrom timeDate isWeekday
 #'
 #' @examples
 #'\donttest{
@@ -31,10 +32,17 @@
 #' library(stringr)
 #'
 #' BRVM_stock_market("2022-04-25")
-#' BRVM_stock_market("2021-03-25")
+#' BRVM_stock_market("2025-05-22")
 #'}
+#' @rdname BRVM_stock_market
+#' @export
+setGeneric("BRVM_stock_market", function(.weekday) standardGeneric("BRVM_stock_market" ))
 
-BRVM_stock_market <- function(.weekday){
+
+#' @rdname BRVM_stock_market
+#' @export
+setMethod("BRVM_stock_market", signature(.weekday = "character"), function(.weekday) {
+
   the_date <- lubridate::parse_date_time(.weekday, orders = "ymd")
   #  the_date <- as.POSIXct(.weekday)
   if (the_date < Sys.Date()) {
@@ -53,10 +61,17 @@ BRVM_stock_market <- function(.weekday){
 
           if (length(stock_data)!=0) {
             stock_data <- stock_data[[1]]
+            x1 = ncol(stock_data)
+            stock_data = stock_data[,-c((x1-1),x1)]
+
+            # colnames(stock_data) <- c("Ticker", "Equity", "Volume", "Value", "Previous price",
+            #                           "Open", "Close", "Mean", "Change (%)", "Annual change (%)",
+            #                           "Reference price", "Low", "High", "Net Income", "Date",
+            #                           "Compartment", "Yield Net (%)", "PER")
 
             colnames(stock_data) <- c("Ticker", "Equity", "Volume", "Value", "Previous price",
                                       "Open", "Close", "Mean", "Change (%)", "Annual change (%)",
-                                      "Reference price", "Low", "High", "Net Income", "Date",
+                                      "Reference price", "Net Income", "Date",
                                       "Compartment", "Yield Net (%)", "PER")
             ##Remove first line
             stock_data <- stock_data[-1,]
@@ -99,18 +114,21 @@ BRVM_stock_market <- function(.weekday){
               #   stock_data[i,1:2] = "TOTAL - Equities market"
               # }
 
-
             }
 
             # if (str_sub(stock_data[NROW(stock_data),1], 1,13) == "TOTAL - March") {
             #     stock_data[NROW(stock_data),1:2] = "TOTAL - Equities market"
             # }
 
+
+            #stock_data01 = stock_data
             ###Remove duplication for sector name
-            stock_data[c(1, 15, 21, 38, 42, 49, 58),-c(1,5)] <- ""
+
+            #stock_data[c(1, 13),-c(1,5)] <- ""
+            stock_data[which(nchar(stock_data$Ticker) > 5 & !startsWith(stock_data$Ticker,"TOTAL")),-c(1,5)] <- ""
 
             ##For total
-            stock_data[c(14, 20, 37, 41, 48, 57, 60, 61),2] <- ""
+            stock_data[which(startsWith(stock_data$Ticker,"TOTAL")),2] <- ""
             #stock_data<- stock_data[, -8]   #Remove the moy
 
             for (i in 1 : nrow(stock_data)){
@@ -202,4 +220,5 @@ BRVM_stock_market <- function(.weekday){
   } else {
     message("The date to be entered must not be greater than or equal to today's date")
   }
-}
+})
+

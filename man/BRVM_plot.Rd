@@ -2,34 +2,58 @@
 % Please edit documentation in R/brvm_plot.R
 \name{BRVM_plot}
 \alias{BRVM_plot}
-\title{BRVM PLOT}
+\alias{BRVM_plot,character-method}
+\alias{BRVM_plot,data.frame-method}
+\title{BRVM Plot}
 \usage{
 BRVM_plot(
-  .company,
-  from = Sys.Date() - 365,
+  object = "ALL INDEXES",
+  from = Sys.Date() - 89,
+  to = Sys.Date() - 1,
+  up.col = "darkgreen",
+  down.col = "red",
+  ...
+)
+
+\S4method{BRVM_plot}{character}(
+  object = "ALL INDEXES",
+  from = Sys.Date() - 89,
   to = Sys.Date() - 1,
   up.col = "darkgreen",
   down.col = "red"
 )
+
+\S4method{BRVM_plot}{data.frame}(object, ticker.name = NULL, up.col = "darkgreen", down.col = "red")
 }
 \arguments{
-\item{.company}{is the Ticker(s) name(s)}
+\item{object}{Either a character vector specifying one or more ticker symbols,
+or a \code{data.frame} containing price data.
+If a character vector is provided, the data are automatically fetched from the BRVM API.
+If a \code{data.frame} is supplied, it must include at least the following columns:
+\code{"Date"}, \code{"Open"}, \code{"High"}, \code{"Low"}, \code{"Close"}, and \code{"Volume"}.
+When additional \code{"Ticker"} columns are present, multiple series are plotted.}
 
-\item{from}{A quoted start date, ie. "2020-01-01" or "2020/01/01". The date
-must be in ymd format "YYYY-MM-DD" or "YYYY/MM/DD".}
+\item{from}{Start date of the period to retrieve (quoted).
+Must be in \code{"YYYY-MM-DD"} or \code{"YYYY/MM/DD"} format. Defaults to 89 days before today.}
 
-\item{to}{A quoted end date, ie. "2022-01-31" or "2022/01/31". The date must
-be in ymd format "YYYY-MM-DD" or "YYYY/MM/DD"}
+\item{to}{End date of the period to retrieve (quoted).
+Must be in \code{"YYYY-MM-DD"} or \code{"YYYY/MM/DD"} format. Defaults to yesterday.}
 
-\item{up.col}{is the up color}
+\item{up.col}{Color for upward movements. Default is \code{"darkgreen"}.}
 
-\item{down.col}{is down color}
+\item{down.col}{Color for downward movements. Default is \code{"red"}.}
+
+\item{...}{another arguments.}
+
+\item{ticker.name}{character, ticker name.}
 }
 \value{
-An interactive chart
+An interactive \code{highchart} object displaying price and volume dynamics.
 }
 \description{
-This function will get Ticker(s) data and then plot it.
+Generates an interactive chart for one or several BRVM-listed tickers.
+This function retrieves historical market data for the specified ticker(s)
+and produces an interactive price and volume chart using \code{highcharter}.
 }
 \examples{
 \donttest{
@@ -41,58 +65,51 @@ library(dplyr)
 library(stringr)
 library(xts)
 
+# Plot a single ticker
 BRVM_plot("BICC")
 
-# You can change the up and down colors as follow
+# Customize the up and down colors
 BRVM_plot("BICC", up.col = "blue", down.col = "pink")
 
-# Plot the closing price of a group of 3 tickers
-BRVM_plot(c("BICC","ETIT", "SNTS"))
+# Plot a group of tickers
+BRVM_plot(object = c("BICC", "ETIT", "SNTS"))
+
+# Plot using a local data.frame with market data
+data = BRVM_get("BOABF")
+BRVM_plot(data)
+
+data <- data.frame(
+  Date = Sys.Date() - 0:5,
+  Open = 1:6, High = 2:7, Low = 1:6, Close = 2:7, Volume = 10:15
+)
+BRVM_plot(data)
 }
 }
 \seealso{
-\code{BRVM_ticker_desc()}
-
-\code{BRVM_tickers()}
-
 Other Data Retrieval: 
 \code{\link{BRVM_bySector}()},
 \code{\link{BRVM_cap}()},
 \code{\link{BRVM_company_rank}()},
 \code{\link{BRVM_get}()},
-\code{\link{BRVM_index}()},
-\code{\link{BRVM_index_stock}()},
-\code{\link{BRVM_market_activity}()},
+\code{\link{BRVM_rank}()},
 \code{\link{BRVM_stock_market}()},
-\code{\link{BRVM_ticker_desc}()},
-\code{\link{company_cap}()},
-\code{\link{company_country}()},
-\code{\link{company_nbrank}()},
-\code{\link{company_sector}()},
-\code{\link{company_traded_val}()}
+\code{\link{company_sector}()}
 
 Other BRVM: 
-\code{\link{BRVM.index}()},
 \code{\link{BRVM_cap}()},
 \code{\link{BRVM_company_cap}()},
 \code{\link{BRVM_company_rank}()},
 \code{\link{BRVM_company_url}()},
-\code{\link{BRVM_index}()},
-\code{\link{BRVM_index_stock}()},
-\code{\link{BRVM_market_activity}()},
+\code{\link{BRVM_rank}()},
 \code{\link{BRVM_stock_market}()},
-\code{\link{BRVM_ticker_desc}()},
-\code{\link{BRVM_traded_val}()},
-\code{\link{company_cap}()},
-\code{\link{company_country}()},
-\code{\link{company_nbrank}()},
 \code{\link{company_sector}()},
-\code{\link{company_traded_val}()},
 \code{\link{normality_test}()},
 \code{\link{stationarity_test}()}
 }
 \author{
 Koffi Frederic SESSIE
+
+Olabiyi Aurel Geoffroy ODJO
 }
 \concept{BRVM}
 \concept{Data Retrieval}

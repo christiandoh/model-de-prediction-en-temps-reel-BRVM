@@ -2,23 +2,49 @@
 % Please edit documentation in R/brvm-company-rank.R
 \name{BRVM_company_rank}
 \alias{BRVM_company_rank}
-\title{BRVM Companies Rank - Get all tickers rank according to last quotation}
+\alias{BRVM_company_rank,missing-method}
+\title{BRVM Company Ranking by Daily Performance}
 \usage{
-BRVM_company_rank()
+BRVM_company_rank(object)
+
+\S4method{BRVM_company_rank}{missing}(object)
+}
+\arguments{
+\item{object}{No need to give an argument.}
 }
 \value{
+A tibble containing the following columns:
+\itemize{
+\item \code{ticker} – The stock ticker symbol.
+\item \code{company_name} – The name of the company.
+\item \code{percent_change} – The daily percentage change.
+\item \code{rank} – The company's position in the ranking (1 = highest increase).
+}
+
 "tbl_df"     "tbl"        "data.frame"
 }
 \description{
+Retrieves daily trading data for all companies listed on the
+Bourse Régionale des Valeurs Mobilières (BRVM) and ranks them
+according to their percentage change in share price.
+
 This function returns companies rank from the BRVM Bourse exchange according to their daily change (variation).
 }
 \details{
+The function scrapes the official BRVM website to collect trading
+information such as traded volume, previous price, opening price,
+closing price, and daily percent change.
+After cleaning and converting numeric fields, companies are ranked
+in descending order of percentage change, making it easy to identify
+the day's top gainers and losers.
+
 This function will get the rank of the companies listed on the BVRM exchange through the Rich Bourse site.
 The function takes no parameter
 }
 \examples{
 \donttest{
 library(dplyr)
+library(rvest)
 BRVM_company_rank()
 comp.rank <- BRVM_company_rank()
 comp.rank<-comp.rank\%>\%
@@ -33,42 +59,28 @@ Other Data Retrieval:
 \code{\link{BRVM_bySector}()},
 \code{\link{BRVM_cap}()},
 \code{\link{BRVM_get}()},
-\code{\link{BRVM_index}()},
-\code{\link{BRVM_index_stock}()},
-\code{\link{BRVM_market_activity}()},
 \code{\link{BRVM_plot}()},
+\code{\link{BRVM_rank}()},
 \code{\link{BRVM_stock_market}()},
-\code{\link{BRVM_ticker_desc}()},
-\code{\link{company_cap}()},
-\code{\link{company_country}()},
-\code{\link{company_nbrank}()},
-\code{\link{company_sector}()},
-\code{\link{company_traded_val}()}
+\code{\link{company_sector}()}
 
 Other BRVM: 
-\code{\link{BRVM.index}()},
 \code{\link{BRVM_cap}()},
 \code{\link{BRVM_company_cap}()},
 \code{\link{BRVM_company_url}()},
-\code{\link{BRVM_index}()},
-\code{\link{BRVM_index_stock}()},
-\code{\link{BRVM_market_activity}()},
 \code{\link{BRVM_plot}()},
+\code{\link{BRVM_rank}()},
 \code{\link{BRVM_stock_market}()},
-\code{\link{BRVM_ticker_desc}()},
-\code{\link{BRVM_traded_val}()},
-\code{\link{company_cap}()},
-\code{\link{company_country}()},
-\code{\link{company_nbrank}()},
 \code{\link{company_sector}()},
-\code{\link{company_traded_val}()},
 \code{\link{normality_test}()},
 \code{\link{stationarity_test}()}
 }
 \author{
 Koffi Frederic SESSIE
 
-Oudouss Diakité Abdoul
+Olabiyi Aurel Geoffroy ODJO
+
+Oudouss Diakite Abdoul
 
 Steven P. Sanderson II, MPH
 }
