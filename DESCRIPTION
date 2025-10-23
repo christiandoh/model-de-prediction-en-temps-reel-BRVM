@@ -5,7 +5,7 @@ Version: 5.3.2
 Authors@R: c(
     person("Sessie","Koffi Frederic", email = "koffisessie@gmail.com",
             role = c("aut","cre","cph")),
-    person("Odjo", "Olabiyi Aurel Géoffroy", role = "aut",
+    person("Odjo", "Olabiyi Aurel Géoffroy | xgeosoft", role = "aut",
             email = "odjoaurel@gmail.com"),
     person("Diakité", "Abdoul Oudouss", role = "aut",
             email = "abdouloudoussdiakite@gmail.com"),
