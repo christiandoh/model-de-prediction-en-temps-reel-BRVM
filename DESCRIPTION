@@ -37,11 +37,12 @@ Imports:
     timeDate,
     rvest,
     lubridate
-Suggests: 
+Suggests:
+    quarto,
     rmarkdown,
     knitr,
     roxygen2,
     testthat (>= 3.0.0)
-VignetteBuilder: knitr
+VignetteBuilder: quarto, knitr
 RoxygenNote: 7.3.3
 Config/testthat/edition: 3

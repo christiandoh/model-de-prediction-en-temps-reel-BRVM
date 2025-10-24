@@ -38,6 +38,7 @@
 #'
 #' @examples
 #' \donttest{
+#' \dontrun{
 #' library(highcharter)
 #' library(lubridate)
 #' library(rlang)
@@ -64,7 +65,7 @@
 #'   Open = 1:6, High = 2:7, Low = 1:6, Close = 2:7, Volume = 10:15
 #' )
 #' BRVM_plot(data)
-#' }
+#' }}
 #' @rdname BRVM_plot
 #' @export
 setGeneric("BRVM_plot", function(object = "ALL INDEXES",from = Sys.Date() - 89,to = Sys.Date() - 1,up.col = "darkgreen",down.col = "red",...) standardGeneric("BRVM_plot"))

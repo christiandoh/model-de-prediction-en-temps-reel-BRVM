@@ -14,3 +14,5 @@
 ^.*\.Rproj$
 ^\.Rhistory$
 ^vignettes$
+^doc$
+^Meta$

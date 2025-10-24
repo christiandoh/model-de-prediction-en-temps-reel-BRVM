@@ -127,7 +127,7 @@ setMethod(
                                     Avoid disabling SSL verification unless you fully trust the server and your internet connection.")
                 }
 
-                ticker <- unique(ticker)
+                ticker <- unique(toupper(ticker))
                 market_tickers = BRVM_tickers()
                 all_tickers = market_tickers@List
 

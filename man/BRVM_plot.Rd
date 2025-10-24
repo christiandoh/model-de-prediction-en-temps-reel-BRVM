@@ -57,6 +57,7 @@ and produces an interactive price and volume chart using \code{highcharter}.
 }
 \examples{
 \donttest{
+\dontrun{
 library(highcharter)
 library(lubridate)
 library(rlang)
@@ -83,7 +84,7 @@ data <- data.frame(
   Open = 1:6, High = 2:7, Low = 1:6, Close = 2:7, Volume = 10:15
 )
 BRVM_plot(data)
-}
+}}
 }
 \seealso{
 Other Data Retrieval: 
