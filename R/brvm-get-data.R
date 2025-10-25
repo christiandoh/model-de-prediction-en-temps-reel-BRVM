@@ -170,7 +170,7 @@ setMethod(
                             asset_data <- as.data.frame(matrix(NA, ncol = 6, nrow = 0))
                             names(asset_data) <- c("Date", "Open", "High", "Low", "Close", "Volume")
 
-                            range_period = seq(from = first_date, to = end_date, by = "85 day")
+                            range_period = seq(from = first_date, to = end_date, by = "89 day")
                             ifelse(!(end_date %in% range_period),
                                 range_period <- c(range_period,end_date),range_period)
 
@@ -197,7 +197,7 @@ setMethod(
                                         "Sec-Fetch-Site" = "same-origin"
                                     )
 
-                                Sys.sleep(1)
+                                Sys.sleep(0.111) #;print("A") fast
 
                                 my_data <- base_request %>%
                                     req_body_json(list('ticker'= Tick,
