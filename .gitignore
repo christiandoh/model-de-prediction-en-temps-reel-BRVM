@@ -4,3 +4,30 @@ docs
 inst/doc
 /doc/
 /Meta/
+
+# Data files (large)
+data/brvm/*.csv
+data/exogenous/**/*.csv
+data/models/*.csv
+
+# Logs
+scraping/logs/*.log
+
+# Skip history
+.Rhistory
+
+# Node modules
+node_modules/
+
+# OS files
+Thumbs.db
+.DS_Store
+
+# IDE
+.idea/
+.vscode/
+
+# Keep data directory structure but not the CSV data
+data/brvm/*.csv
+data/exogenous/**/*.csv
+data/models/*.csv

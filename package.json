@@ -1,0 +1,35 @@
+{
+  "name": "brvm-exogenous-predictor",
+  "version": "1.0.0",
+  "description": "BRVM Stock Prediction System using Exogenous Variables - Real-time scraping & forecasting",
+  "main": "scraping/engine/index.js",
+  "directories": {
+    "data": "data",
+    "scraping": "scraping",
+    "models": "models"
+  },
+  "scripts": {
+    "scrape:brvm": "node scraping/engine/collect-brvm.js",
+    "scrape:commodities": "node scraping/engine/collect-commodities.js",
+    "scrape:all": "node scraping/engine/index.js",
+    "predict:realtime": "node models/predict-realtime.js",
+    "train": "node models/train-model.js",
+    "dashboard": "node api/dashboard-server.js"
+  },
+  "keywords": [
+    "brvm",
+    "stock-market",
+    "forecasting",
+    "exogenous-variables",
+    "west-africa"
+  ],
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "axios": "^1.18.1",
+    "cheerio": "^1.2.0"
+  },
+  "optionalDependencies": {
+    "express": "^4.18.0"
+  }
+}

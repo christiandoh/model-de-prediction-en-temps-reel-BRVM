@@ -1,0 +1,157 @@
+{
+  "timestamp": "2026-07-14T12:25:29.321Z",
+  "results": {
+    "ORAC": {
+      "ticker": "ORAC",
+      "trainSize": 734,
+      "testSize": 184,
+      "lastPrice": 14250,
+      "lastDate": "31/12/2025",
+      "models": {
+        "ridge": {
+          "r2": 0,
+          "mse": 0.10883328734057204,
+          "mae": 0.28130933200013264,
+          "dirAcc": 0.5271739130434783,
+          "topFeatures": []
+        },
+        "randomForest": {
+          "r2": 0.3745762638982034,
+          "mse": 0.07823039777097611,
+          "mae": 0.23225136322447712,
+          "dirAcc": 0.7336956521739131
+        }
+      },
+      "latestFeatures": {
+        "date": "31/12/2025",
+        "price": 14250,
+        "return": -0.18571428571428572,
+        "return_lag1": 0.2085635359116022,
+        "return_lag5": -0.23487544483985764,
+        "return_lag22": 0.4627906976744186,
+        "rubber_price": 0,
+        "palm_oil_price": 0,
+        "brent_price": 0,
+        "cocoa_price": 0,
+        "gold_price": 0,
+        "bceao_rate": 3.5,
+        "inflation": 0,
+        "event_score": 0
+      }
+    },
+    "SGBC": {
+      "ticker": "SGBC",
+      "trainSize": 2356,
+      "testSize": 589,
+      "lastPrice": 29895,
+      "lastDate": "31/12/2025",
+      "models": {
+        "ridge": {
+          "r2": 0,
+          "mse": 0.191131780391168,
+          "mae": 0.3468757131531143,
+          "dirAcc": 0.5823429541595926,
+          "topFeatures": []
+        },
+        "randomForest": {
+          "r2": 0.18794369300039881,
+          "mse": 0.16038477686301195,
+          "mae": 0.32202032235714195,
+          "dirAcc": 0.6213921901528013
+        }
+      },
+      "latestFeatures": {
+        "date": "31/12/2025",
+        "price": 29895,
+        "return": 0.4235714285714286,
+        "return_lag1": 0.9820670127418594,
+        "return_lag5": -0.44776119402985076,
+        "return_lag22": -0.572,
+        "rubber_price": 0,
+        "palm_oil_price": 0,
+        "brent_price": 0,
+        "cocoa_price": 0,
+        "gold_price": 0,
+        "bceao_rate": 3.5,
+        "inflation": 0,
+        "event_score": 0
+      }
+    },
+    "SLBC": {
+      "ticker": "SLBC",
+      "trainSize": 1576,
+      "testSize": 394,
+      "lastPrice": 28900,
+      "lastDate": "31/12/2025",
+      "models": {
+        "ridge": {
+          "r2": 0,
+          "mse": 1.0046804127064448,
+          "mae": 0.7884599943512743,
+          "dirAcc": 0.467005076142132,
+          "topFeatures": []
+        },
+        "randomForest": {
+          "r2": 0.15471909204191936,
+          "mse": 0.8406609022446694,
+          "mae": 0.7140184742548691,
+          "dirAcc": 0.4847715736040609
+        }
+      },
+      "latestFeatures": {
+        "date": "31/12/2025",
+        "price": 28900,
+        "return": 1.2316602316602316,
+        "return_lag1": -0.31840311587828635,
+        "return_lag5": -0.3793103448275862,
+        "return_lag22": -0.15816326530612243,
+        "rubber_price": 0,
+        "palm_oil_price": 0,
+        "brent_price": 0,
+        "cocoa_price": 0,
+        "gold_price": 0,
+        "bceao_rate": 3.5,
+        "inflation": 0,
+        "event_score": 0
+      }
+    },
+    "SOGC": {
+      "ticker": "SOGC",
+      "trainSize": 2259,
+      "testSize": 565,
+      "lastPrice": 7900,
+      "lastDate": "31/12/2025",
+      "models": {
+        "ridge": {
+          "r2": 0,
+          "mse": 0.4242495387985531,
+          "mae": 0.5212674066104623,
+          "dirAcc": 0.5398230088495575,
+          "topFeatures": []
+        },
+        "randomForest": {
+          "r2": 0.15023914797662996,
+          "mse": 0.3701668059958493,
+          "mae": 0.4848263732306881,
+          "dirAcc": 0.5398230088495575
+        }
+      },
+      "latestFeatures": {
+        "date": "31/12/2025",
+        "price": 7900,
+        "return": 0.7136659436008677,
+        "return_lag1": -0.078,
+        "return_lag5": -0.673469387755102,
+        "return_lag22": 0.02699228791773779,
+        "rubber_price": 0,
+        "palm_oil_price": 0,
+        "brent_price": 0,
+        "cocoa_price": 0,
+        "gold_price": 0,
+        "bceao_rate": 3.5,
+        "inflation": 0,
+        "event_score": 0
+      }
+    }
+  }
+}
