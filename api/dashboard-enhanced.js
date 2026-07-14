@@ -38,7 +38,8 @@ function readCSVasJSON(filePath) {
 }
 
 // === PAGE HTML DU DASHBOARD ===
-const HTML = (predictions, forecast, prices) => `
+const llmColors = {BUY:'#2e7d32',HOLD:'#e65100',SELL:'#c62828'};
+const HTML = (predictions, forecast, prices, llm) => `
 <!DOCTYPE html>
 <html lang="fr">
 <head>
@@ -170,6 +171,28 @@ th { background: #f5f5f5; font-weight: 600; color: #555; }
         </tr>`;
       }).join('')}
     </table>
+  </div>
+
+  <div class="card" style="margin-top:20px">
+    <h2>🤖 Analyse LLM (Qwen 2.5 7B - Local)</h2>
+    <table>
+      <tr><th>Ticker</th><th>Signal</th><th>Tendance</th><th>30j Min</th><th>30j Max</th><th>1 an Min</th><th>1 an Max</th><th>Direction</th></tr>
+      ${Object.entries(llm?.tickers || {}).map(([t, v]) => {
+        if (!v?.recommendation) return '';
+        const col = llmColors[v.recommendation] || '#666';
+        return `<tr>
+          <td><span class="ticker-badge ${t.toLowerCase()}-bg">${t}</span></td>
+          <td style="color:${col};font-weight:700">${v.recommendation}</td>
+          <td>${v.analysis?.trend || 'N/A'}</td>
+          <td>${v.predictions?.nextMonth?.low?.toLocaleString() || 'N/A'}</td>
+          <td>${v.predictions?.nextMonth?.high?.toLocaleString() || 'N/A'}</td>
+          <td>${v.predictions?.nextYear?.low?.toLocaleString() || 'N/A'}</td>
+          <td>${v.predictions?.nextYear?.high?.toLocaleString() || 'N/A'}</td>
+          <td class="${v.predictions?.nextYear?.direction === 'up' ? 'up' : 'down'}">${v.predictions?.nextYear?.direction || 'N/A'}</td>
+        </tr>`;
+      }).join('')}
+    </table>
+    <p style="color:#888;font-size:12px;margin-top:8px">Modèle: qwen2.5:7b-instruct via Ollama (local) · Dernière analyse: ${llm?.timestamp ? new Date(llm.timestamp).toLocaleString('fr-FR') : 'N/A'}</p>
   </div>
 </div>
 
@@ -344,13 +367,14 @@ const server = http.createServer((req, res) => {
     if (pathname === '/' || pathname === '/index.html') {
       const p = readJSON(path.join(MODELS_DIR, 'predictions_realtime.json'));
       const f = readJSON(path.join(MODELS_DIR, 'forecast_10years.json'));
+      const llm = readJSON(path.join(MODELS_DIR, 'llm_predictions.json'));
       const prices = {};
       for (const t of ['ORAC','SGBC','SLBC','SOGC']) {
         prices[t] = readCSVasJSON(path.join(DATA_DIR, 'brvm', `${t}.csv`)).slice(-100);
       }
       res.setHeader('Content-Type', 'text/html; charset=utf-8');
       res.writeHead(200);
-      res.end(HTML(p, f, prices));
+      res.end(HTML(p, f, prices, llm));
     }
     else if (pathname === '/api/predictions') {
       res.writeHead(200);
@@ -365,6 +389,14 @@ const server = http.createServer((req, res) => {
       const data = readCSVasJSON(path.join(DATA_DIR, 'brvm', `${ticker}.csv`));
       res.writeHead(200);
       res.end(JSON.stringify({ ticker, count: data.length, data: data.slice(-500) }));
+    }
+    else if (pathname === '/api/llm') {
+      res.writeHead(200);
+      res.end(JSON.stringify(readJSON(path.join(MODELS_DIR, 'llm_predictions.json')) || {}));
+    }
+    else if (pathname === '/api/consolidated') {
+      res.writeHead(200);
+      res.end(JSON.stringify(readJSON(path.join(MODELS_DIR, 'consolidated_report.json')) || {}));
     }
     else if (pathname === '/api/status') {
       res.writeHead(200);

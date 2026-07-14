@@ -1,0 +1,145 @@
+{
+  "timestamp": "2026-07-14T13:21:37.276Z",
+  "model": "qwen2.5:7b-instruct",
+  "tickers": {
+    "ORAC": {
+      "ticker": "ORAC",
+      "analysis": {
+        "trend": "up",
+        "exogenousImpact": {
+          "interestRates": 5,
+          "commodityPrices": 5,
+          "inflation": 5,
+          "geopolitical": 4,
+          "political": 3
+        }
+      },
+      "predictions": {
+        "nextMonth": {
+          "low": 14445,
+          "high": 15965,
+          "confidence": "MEDIUM"
+        },
+        "nextYear": {
+          "low": 12924,
+          "high": 19767,
+          "direction": "up"
+        }
+      },
+      "recommendation": "HOLD",
+      "reasoning": "The stock price has shown an upward trend, with recent prices above the last reported price. The macroeconomic factors such as BCEAO rate and GDP CI are positive, but geopolitical events could pose risks.",
+      "risks": [
+        "Geopolitical instability in active regions",
+        "Volatility affecting stock price",
+        "Economic downturn impacting company performance"
+      ],
+      "lastPrice": 15205,
+      "lastDate": "14/07/2026",
+      "responseTime": "64.7s"
+    },
+    "SGBC": {
+      "ticker": "SGBC",
+      "analysis": {
+        "trend": "up",
+        "exogenousImpact": {
+          "interestRates": 5,
+          "commodityPrices": 5,
+          "inflation": 4,
+          "geopolitical": 3,
+          "political": 2
+        }
+      },
+      "predictions": {
+        "nextMonth": {
+          "low": 36290,
+          "high": 40110,
+          "confidence": "MEDIUM"
+        },
+        "nextYear": {
+          "low": 32470,
+          "high": 49660,
+          "direction": "up"
+        }
+      },
+      "recommendation": "HOLD",
+      "reasoning": "The stock has shown an upward trend in recent data points, and the macroeconomic factors suggest a positive outlook. However, geopolitical risks remain.",
+      "risks": [
+        "Economic volatility due to active events",
+        "Political instability in the region",
+        "Market sentiment fluctuations"
+      ],
+      "lastPrice": 38200,
+      "lastDate": "14/07/2026",
+      "responseTime": "53.2s"
+    },
+    "SLBC": {
+      "ticker": "SLBC",
+      "analysis": {
+        "trend": "up",
+        "exogenousImpact": {
+          "interestRates": 3,
+          "commodityPrices": 4,
+          "inflation": 5,
+          "geopolitical": 4,
+          "political": 3
+        }
+      },
+      "predictions": {
+        "nextMonth": {
+          "low": 38950,
+          "high": 43050,
+          "confidence": "MEDIUM"
+        },
+        "nextYear": {
+          "low": 34850,
+          "high": 53300,
+          "direction": "up"
+        }
+      },
+      "recommendation": "HOLD",
+      "reasoning": "Based on recent price increases and positive annual return, the stock shows an upward trend. However, volatility remains high which poses a risk.",
+      "risks": [
+        "High Volatility",
+        "Market Dependence",
+        "Geopolitical Risks"
+      ],
+      "lastPrice": 41000,
+      "lastDate": "14/07/2026",
+      "responseTime": "42.0s"
+    },
+    "SOGC": {
+      "ticker": "SOGC",
+      "analysis": {
+        "trend": "sideways",
+        "exogenousImpact": {
+          "interestRates": 3.5,
+          "commodityPrices": 5,
+          "inflation": 5,
+          "geopolitical": 4,
+          "political": 5
+        }
+      },
+      "predictions": {
+        "nextMonth": {
+          "low": 7614,
+          "high": 8416,
+          "confidence": "MEDIUM"
+        },
+        "nextYear": {
+          "low": 6813,
+          "high": 10420,
+          "direction": "up"
+        }
+      },
+      "recommendation": "HOLD",
+      "reasoning": "Recent price movements are within a narrow range, suggesting sideways trend. Active geopolitical events may impact volatility.",
+      "risks": [
+        "Market volatility due to active geopolitical events",
+        "Economic uncertainties with N/A inflation data"
+      ],
+      "lastPrice": 8015,
+      "lastDate": "14/07/2026",
+      "responseTime": "42.7s"
+    }
+  }
+}

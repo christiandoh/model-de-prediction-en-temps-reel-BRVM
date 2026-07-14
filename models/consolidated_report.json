@@ -1,0 +1,41 @@
+{
+  "generated": "2026-07-14T13:21:43.791Z",
+  "summary": [
+    {
+      "ticker": "ORAC",
+      "price": 15205,
+      "llmSignal": "HOLD",
+      "llmReasoning": "The stock price has shown an upward trend, with recent prices above the last reported price. The macroeconomic factors such as BCEAO rate and GDP CI are positive, but geopolitical events could pose ri",
+      "arimaxSignal": "2.67%",
+      "forecast2036": 26812,
+      "trend": "up"
+    },
+    {
+      "ticker": "SGBC",
+      "price": 38200,
+      "llmSignal": "HOLD",
+      "llmReasoning": "The stock has shown an upward trend in recent data points, and the macroeconomic factors suggest a positive outlook. However, geopolitical risks remain.",
+      "arimaxSignal": "10.34%",
+      "forecast2036": 92156,
+      "trend": "up"
+    },
+    {
+      "ticker": "SLBC",
+      "price": 41000,
+      "llmSignal": "HOLD",
+      "llmReasoning": "Based on recent price increases and positive annual return, the stock shows an upward trend. However, volatility remains high which poses a risk.",
+      "arimaxSignal": "18.13%",
+      "forecast2036": 118014,
+      "trend": "up"
+    },
+    {
+      "ticker": "SOGC",
+      "price": 8015,
+      "llmSignal": "HOLD",
+      "llmReasoning": "Recent price movements are within a narrow range, suggesting sideways trend. Active geopolitical events may impact volatility.",
+      "arimaxSignal": "12.40%",
+      "forecast2036": 14580,
+      "trend": "sideways"
+    }
+  ]
+}
