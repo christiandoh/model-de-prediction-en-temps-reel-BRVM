@@ -1,0 +1,576 @@
+{
+  "timestamp": "2026-07-14T13:04:37.974Z",
+  "forecastDate": "2026-07-14",
+  "horizon": "10 years",
+  "methodology": "Monte Carlo simulation with historical drift, volatility, and cycle decomposition",
+  "tickers": {
+    "ORAC": {
+      "currentPrice": 15205,
+      "currentDate": "14/07/2026",
+      "annualReturn": "5.61%",
+      "annualVol": "18.77%",
+      "forecast5Year": {
+        "year": 2031,
+        "price": 20100,
+        "return": 32.19027523738929
+      },
+      "forecast10Year": {
+        "year": 2036,
+        "price": 26812,
+        "return": 76.33603444010095,
+        "lower95": 12827,
+        "upper95": 49986
+      },
+      "yearly": [
+        {
+          "year": 2026,
+          "date": "2026-07-14",
+          "mean": 15205,
+          "median": 15205,
+          "lower68": 15205,
+          "upper68": 15205,
+          "lower95": 15205,
+          "upper95": 15205,
+          "return": 0
+        },
+        {
+          "year": 2027,
+          "date": "2027-07-14",
+          "mean": 16085,
+          "median": 16036,
+          "lower68": 14362,
+          "upper68": 17820,
+          "lower95": 12994,
+          "upper95": 19861,
+          "return": 5.786340602127349
+        },
+        {
+          "year": 2028,
+          "date": "2028-07-14",
+          "mean": 17046,
+          "median": 16911,
+          "lower68": 14652,
+          "upper68": 19623,
+          "lower95": 12446,
+          "upper95": 22581,
+          "return": 12.107145215671222
+        },
+        {
+          "year": 2029,
+          "date": "2029-07-14",
+          "mean": 18029,
+          "median": 17864,
+          "lower68": 14810,
+          "upper68": 21145,
+          "lower95": 12089,
+          "upper95": 25515,
+          "return": 18.573413817036744
+        },
+        {
+          "year": 2030,
+          "date": "2030-07-14",
+          "mean": 19040,
+          "median": 18708,
+          "lower68": 14961,
+          "upper68": 22820,
+          "lower95": 12050,
+          "upper95": 28263,
+          "return": 25.221633860462944
+        },
+        {
+          "year": 2031,
+          "date": "2031-07-14",
+          "mean": 20100,
+          "median": 19631,
+          "lower68": 15280,
+          "upper68": 24537,
+          "lower95": 12315,
+          "upper95": 31536,
+          "return": 32.19027523738929
+        },
+        {
+          "year": 2032,
+          "date": "2032-07-14",
+          "mean": 21179,
+          "median": 20527,
+          "lower68": 15792,
+          "upper68": 26251,
+          "lower95": 12393,
+          "upper95": 34383,
+          "return": 39.28876183193659
+        },
+        {
+          "year": 2033,
+          "date": "2033-07-14",
+          "mean": 22496,
+          "median": 21829,
+          "lower68": 16158,
+          "upper68": 28306,
+          "lower95": 12442,
+          "upper95": 38348,
+          "return": 47.953656808027546
+        },
+        {
+          "year": 2034,
+          "date": "2034-07-14",
+          "mean": 24053,
+          "median": 23306,
+          "lower68": 16854,
+          "upper68": 30946,
+          "lower95": 12488,
+          "upper95": 41505,
+          "return": 58.19093169755325
+        },
+        {
+          "year": 2035,
+          "date": "2035-07-14",
+          "mean": 25448,
+          "median": 24148,
+          "lower68": 17412,
+          "upper68": 33380,
+          "lower95": 13035,
+          "upper95": 46262,
+          "return": 67.36468768906352
+        },
+        {
+          "year": 2036,
+          "date": "2036-07-14",
+          "mean": 26812,
+          "median": 25274,
+          "lower68": 17878,
+          "upper68": 35835,
+          "lower95": 12827,
+          "upper95": 49986,
+          "return": 76.33603444010095
+        }
+      ],
+      "recommendation": "ACHAT (signal positif 10 ans)"
+    },
+    "SGBC": {
+      "currentPrice": 38200,
+      "currentDate": "14/07/2026",
+      "annualReturn": "8.97%",
+      "annualVol": "28.14%",
+      "forecast5Year": {
+        "year": 2031,
+        "price": 59196,
+        "return": 54.96251078049967
+      },
+      "forecast10Year": {
+        "year": 2036,
+        "price": 92156,
+        "return": 141.24716122728947,
+        "lower95": 30328,
+        "upper95": 219840
+      },
+      "yearly": [
+        {
+          "year": 2026,
+          "date": "2026-07-14",
+          "mean": 38200,
+          "median": 38200,
+          "lower68": 38200,
+          "upper68": 38200,
+          "lower95": 38200,
+          "upper95": 38200,
+          "return": 0
+        },
+        {
+          "year": 2027,
+          "date": "2027-07-14",
+          "mean": 41819,
+          "median": 41464,
+          "lower68": 34814,
+          "upper68": 48785,
+          "lower95": 29686,
+          "upper95": 57051,
+          "return": 9.472513836361385
+        },
+        {
+          "year": 2028,
+          "date": "2028-07-14",
+          "mean": 45890,
+          "median": 44777,
+          "lower68": 35188,
+          "upper68": 56617,
+          "lower95": 28384,
+          "upper95": 71758,
+          "return": 20.130563668788582
+        },
+        {
+          "year": 2029,
+          "date": "2029-07-14",
+          "mean": 49991,
+          "median": 48192,
+          "lower68": 36141,
+          "upper68": 64305,
+          "lower95": 26840,
+          "upper95": 82449,
+          "return": 30.86584468885418
+        },
+        {
+          "year": 2030,
+          "date": "2030-07-14",
+          "mean": 54686,
+          "median": 51473,
+          "lower68": 37441,
+          "upper68": 71791,
+          "lower95": 27562,
+          "upper95": 98411,
+          "return": 43.1576661221563
+        },
+        {
+          "year": 2031,
+          "date": "2031-07-14",
+          "mean": 59196,
+          "median": 55431,
+          "lower68": 38675,
+          "upper68": 80263,
+          "lower95": 25946,
+          "upper95": 114292,
+          "return": 54.96251078049967
+        },
+        {
+          "year": 2032,
+          "date": "2032-07-14",
+          "mean": 64537,
+          "median": 59977,
+          "lower68": 40501,
+          "upper68": 89712,
+          "lower95": 26105,
+          "upper95": 127376,
+          "return": 68.94561559942314
+        },
+        {
+          "year": 2033,
+          "date": "2033-07-14",
+          "mean": 70291,
+          "median": 64722,
+          "lower68": 42389,
+          "upper68": 97348,
+          "lower95": 26731,
+          "upper95": 150704,
+          "return": 84.00691486668437
+        },
+        {
+          "year": 2034,
+          "date": "2034-07-14",
+          "mean": 76698,
+          "median": 68688,
+          "lower68": 45393,
+          "upper68": 109210,
+          "lower95": 27427,
+          "upper95": 172589,
+          "return": 100.78067986992805
+        },
+        {
+          "year": 2035,
+          "date": "2035-07-14",
+          "mean": 84641,
+          "median": 74113,
+          "lower68": 46714,
+          "upper68": 123744,
+          "lower95": 29345,
+          "upper95": 200264,
+          "return": 121.57449483577211
+        },
+        {
+          "year": 2036,
+          "date": "2036-07-14",
+          "mean": 92156,
+          "median": 81008,
+          "lower68": 49933,
+          "upper68": 133172,
+          "lower95": 30328,
+          "upper95": 219840,
+          "return": 141.24716122728947
+        }
+      ],
+      "recommendation": "ACHAT (signal positif 10 ans)"
+    },
+    "SLBC": {
+      "currentPrice": 41000,
+      "currentDate": "14/07/2026",
+      "annualReturn": "10.04%",
+      "annualVol": "51.74%",
+      "forecast5Year": {
+        "year": 2031,
+        "price": 69311,
+        "return": 69.0517719133024
+      },
+      "forecast10Year": {
+        "year": 2036,
+        "price": 118014,
+        "return": 187.83858322019174,
+        "lower95": 11657,
+        "upper95": 514860
+      },
+      "yearly": [
+        {
+          "year": 2026,
+          "date": "2026-07-14",
+          "mean": 41000,
+          "median": 41000,
+          "lower68": 41000,
+          "upper68": 41000,
+          "lower95": 41000,
+          "upper95": 41000,
+          "return": 0
+        },
+        {
+          "year": 2027,
+          "date": "2027-07-14",
+          "mean": 45671,
+          "median": 43591,
+          "lower68": 32224,
+          "upper68": 59416,
+          "lower95": 23425,
+          "upper95": 76936,
+          "return": 11.392567623919113
+        },
+        {
+          "year": 2028,
+          "date": "2028-07-14",
+          "mean": 51365,
+          "median": 46206,
+          "lower68": 30325,
+          "upper68": 72638,
+          "lower95": 20379,
+          "upper95": 110390,
+          "return": 25.27946180773546
+        },
+        {
+          "year": 2029,
+          "date": "2029-07-14",
+          "mean": 57298,
+          "median": 49286,
+          "lower68": 30325,
+          "upper68": 83188,
+          "lower95": 18229,
+          "upper95": 135090,
+          "return": 39.75035827948301
+        },
+        {
+          "year": 2030,
+          "date": "2030-07-14",
+          "mean": 62882,
+          "median": 52204,
+          "lower68": 29273,
+          "upper68": 94328,
+          "lower95": 16218,
+          "upper95": 185050,
+          "return": 53.37117022524043
+        },
+        {
+          "year": 2031,
+          "date": "2031-07-14",
+          "mean": 69311,
+          "median": 55362,
+          "lower68": 29457,
+          "upper68": 109038,
+          "lower95": 16022,
+          "upper95": 216999,
+          "return": 69.0517719133024
+        },
+        {
+          "year": 2032,
+          "date": "2032-07-14",
+          "mean": 76306,
+          "median": 57487,
+          "lower68": 28944,
+          "upper68": 122179,
+          "lower95": 14239,
+          "upper95": 239037,
+          "return": 86.11174408527825
+        },
+        {
+          "year": 2033,
+          "date": "2033-07-14",
+          "mean": 84702,
+          "median": 62558,
+          "lower68": 29001,
+          "upper68": 134583,
+          "lower95": 13608,
+          "upper95": 298114,
+          "return": 106.58906496863008
+        },
+        {
+          "year": 2034,
+          "date": "2034-07-14",
+          "mean": 94822,
+          "median": 66119,
+          "lower68": 27774,
+          "upper68": 156538,
+          "lower95": 13776,
+          "upper95": 341634,
+          "return": 131.27196773598365
+        },
+        {
+          "year": 2035,
+          "date": "2035-07-14",
+          "mean": 104083,
+          "median": 68059,
+          "lower68": 28543,
+          "upper68": 175926,
+          "lower95": 12391,
+          "upper95": 382873,
+          "return": 153.86000301052678
+        },
+        {
+          "year": 2036,
+          "date": "2036-07-14",
+          "mean": 118014,
+          "median": 70791,
+          "lower68": 29417,
+          "upper68": 191762,
+          "lower95": 11657,
+          "upper95": 514860,
+          "return": 187.83858322019174
+        }
+      ],
+      "recommendation": "ACHAT (signal positif 10 ans)"
+    },
+    "SOGC": {
+      "currentPrice": 8015,
+      "currentDate": "14/07/2026",
+      "annualReturn": "5.87%",
+      "annualVol": "34.73%",
+      "forecast5Year": {
+        "year": 2031,
+        "price": 10649,
+        "return": 32.85986448218199
+      },
+      "forecast10Year": {
+        "year": 2036,
+        "price": 14580,
+        "return": 81.91258958209202,
+        "lower95": 3525,
+        "upper95": 40227
+      },
+      "yearly": [
+        {
+          "year": 2026,
+          "date": "2026-07-14",
+          "mean": 8015,
+          "median": 8015,
+          "lower68": 8015,
+          "upper68": 8015,
+          "lower95": 8015,
+          "upper95": 8015,
+          "return": 0
+        },
+        {
+          "year": 2027,
+          "date": "2027-07-14",
+          "mean": 8483,
+          "median": 8295,
+          "lower68": 6856,
+          "upper68": 10140,
+          "lower95": 5488,
+          "upper95": 12396,
+          "return": 5.839459876771924
+        },
+        {
+          "year": 2028,
+          "date": "2028-07-14",
+          "mean": 9037,
+          "median": 8670,
+          "lower68": 6593,
+          "upper68": 11410,
+          "lower95": 4922,
+          "upper95": 15427,
+          "return": 12.754131500400966
+        },
+        {
+          "year": 2029,
+          "date": "2029-07-14",
+          "mean": 9599,
+          "median": 8926,
+          "lower68": 6344,
+          "upper68": 12889,
+          "lower95": 4416,
+          "upper95": 18900,
+          "return": 19.76256436159356
+        },
+        {
+          "year": 2030,
+          "date": "2030-07-14",
+          "mean": 10020,
+          "median": 9127,
+          "lower68": 6167,
+          "upper68": 13740,
+          "lower95": 4097,
+          "upper95": 20493,
+          "return": 25.00948575624209
+        },
+        {
+          "year": 2031,
+          "date": "2031-07-14",
+          "mean": 10649,
+          "median": 9726,
+          "lower68": 6199,
+          "upper68": 14511,
+          "lower95": 3878,
+          "upper95": 23683,
+          "return": 32.85986448218199
+        },
+        {
+          "year": 2032,
+          "date": "2032-07-14",
+          "mean": 11212,
+          "median": 9883,
+          "lower68": 6104,
+          "upper68": 15924,
+          "lower95": 3985,
+          "upper95": 27297,
+          "return": 39.88756015901871
+        },
+        {
+          "year": 2033,
+          "date": "2033-07-14",
+          "mean": 12088,
+          "median": 10560,
+          "lower68": 6283,
+          "upper68": 17351,
+          "lower95": 3703,
+          "upper95": 29673,
+          "return": 50.820918175304364
+        },
+        {
+          "year": 2034,
+          "date": "2034-07-14",
+          "mean": 12782,
+          "median": 10771,
+          "lower68": 6248,
+          "upper68": 19215,
+          "lower95": 3451,
+          "upper95": 33036,
+          "return": 59.47396930246809
+        },
+        {
+          "year": 2035,
+          "date": "2035-07-14",
+          "mean": 13677,
+          "median": 11206,
+          "lower68": 6242,
+          "upper68": 20732,
+          "lower95": 3643,
+          "upper95": 37506,
+          "return": 70.64490888349204
+        },
+        {
+          "year": 2036,
+          "date": "2036-07-14",
+          "mean": 14580,
+          "median": 11759,
+          "lower68": 6364,
+          "upper68": 22525,
+          "lower95": 3525,
+          "upper95": 40227,
+          "return": 81.91258958209202
+        }
+      ],
+      "recommendation": "ACHAT (signal positif 10 ans)"
+    }
+  }
+}
