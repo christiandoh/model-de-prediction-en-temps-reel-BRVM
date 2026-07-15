@@ -1,41 +1,45 @@
 {
-  "generated": "2026-07-14T13:21:43.791Z",
-  "summary": [
-    {
-      "ticker": "ORAC",
-      "price": 15205,
-      "llmSignal": "HOLD",
-      "llmReasoning": "The stock price has shown an upward trend, with recent prices above the last reported price. The macroeconomic factors such as BCEAO rate and GDP CI are positive, but geopolitical events could pose ri",
-      "arimaxSignal": "2.67%",
-      "forecast2036": 26812,
-      "trend": "up"
+  "generatedAt": "2026-07-15T00:11:40.347Z",
+  "dataSources": {
+    "brvmPrices": 11041,
+    "commodities": [
+      "Brent",
+      "Cocoa",
+      "Gold",
+      "Copper",
+      "Corn",
+      "Cotton"
+    ],
+    "macro": [
+      "BCEAO",
+      "Inflation CI",
+      "GDP CI",
+      "Fed Funds",
+      "EUR/XOF"
+    ],
+    "news": 20,
+    "events": 22
+  },
+  "predictions": {
+    "ORAC": {
+      "llm": null,
+      "realtime": null,
+      "tenYear": null
     },
-    {
-      "ticker": "SGBC",
-      "price": 38200,
-      "llmSignal": "HOLD",
-      "llmReasoning": "The stock has shown an upward trend in recent data points, and the macroeconomic factors suggest a positive outlook. However, geopolitical risks remain.",
-      "arimaxSignal": "10.34%",
-      "forecast2036": 92156,
-      "trend": "up"
+    "SGBC": {
+      "llm": null,
+      "realtime": null,
+      "tenYear": null
     },
-    {
-      "ticker": "SLBC",
-      "price": 41000,
-      "llmSignal": "HOLD",
-      "llmReasoning": "Based on recent price increases and positive annual return, the stock shows an upward trend. However, volatility remains high which poses a risk.",
-      "arimaxSignal": "18.13%",
-      "forecast2036": 118014,
-      "trend": "up"
+    "SLBC": {
+      "llm": null,
+      "realtime": null,
+      "tenYear": null
     },
-    {
-      "ticker": "SOGC",
-      "price": 8015,
-      "llmSignal": "HOLD",
-      "llmReasoning": "Recent price movements are within a narrow range, suggesting sideways trend. Active geopolitical events may impact volatility.",
-      "arimaxSignal": "12.40%",
-      "forecast2036": 14580,
-      "trend": "sideways"
+    "SOGC": {
+      "llm": null,
+      "realtime": null,
+      "tenYear": null
     }
-  ]
+  }
 }

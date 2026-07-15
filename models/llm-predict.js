@@ -9,6 +9,14 @@ const {
   MODELS_DIR, log, logError, logSuccess, readCSV 
 } = require('../scraping/engine/utils');
 
+// Cache news par secteur pour chaque ticker
+const COMPANY_KEYWORDS = {
+  ORAC: ['ORANGE', 'ORAC', 'TELECOM', 'MTN', 'TELECOMMUNICATION'],
+  SGBC: ['SGBC', 'SOG', 'GEN', 'SOCIETE GENERALE', 'BANK OF AFRICA', 'NSIA', 'BOA', 'BANQUE'],
+  SLBC: ['SOLIBRA', 'SLBC', 'BRASSERIE', 'CASTEL', 'BGI'],
+  SOGC: ['SOGB', 'PALM', 'HUILE', 'PALMIER', 'SAPH']
+};
+
 const OLLAMA_URL = 'http://localhost:11434';
 const MODEL = 'qwen2.5:7b-instruct';
 const TICKERS = ['ORAC', 'SGBC', 'SLBC', 'SOGC'];
@@ -69,6 +77,7 @@ function buildPrompt(ticker, prices, macro, events) {
     ? Math.sqrt(returns.reduce((sum,r) => sum + (r - returns.reduce((a,b)=>a+b,0)/returns.length)**2, 0) / returns.length) * Math.sqrt(252) * 100
     : 'N/A';
 
+  // Volume analysis (données RÉELLES de volume)
   const lastPrice = prices[prices.length-1]?.close || 0;
   const firstPrice = prices[0]?.close || 1;
   const years = prices.length / 252;
@@ -76,12 +85,26 @@ function buildPrompt(ticker, prices, macro, events) {
     ? (Math.pow(lastPrice / firstPrice, 1 / Math.max(years, 0.5)) - 1) * 100
     : 0;
 
-  // Macro résumé
-  const bceao = readCSV(path.join(MACRO_DIR, 'bceao_rate.csv'));
-  const inflation = readCSV(path.join(MACRO_DIR, 'inflation_ci.csv'));
-  const gdp = readCSV(path.join(MACRO_DIR, 'gdp_ci.csv'));
+  // Macro résumé (données RÉELLES)
+  function lastRow(csv, key = 'value') {
+    if (!csv || csv.length === 0) return 'N/A';
+    return csv[csv.length-1]?.[key] || csv[0]?.[key] || 'N/A';
+  }
+  
+  const bceao = readCSV(path.join(MACRO_DIR, 'bceao_rate.csv')).sort((a,b) => a.date?.localeCompare?.(b.date) || 0);
+  const inflation = readCSV(path.join(MACRO_DIR, 'inflation_ci.csv')).sort((a,b) => a.date?.localeCompare?.(b.date) || 0);
+  const gdp = readCSV(path.join(MACRO_DIR, 'gdp_ci.csv')).sort((a,b) => a.date?.localeCompare?.(b.date) || 0);
+  const fed = readCSV(path.join(MACRO_DIR, 'fed_rate.csv')).sort((a,b) => a.date?.localeCompare?.(b.date) || 0);
 
-  // Événements actifs
+  // Commodités (données RÉELLES)
+  const commodities = {};
+  const commFiles = ['brent','cocoa','copper','corn','cotton','gold'];
+  for (const f of commFiles) {
+    const data = readCSV(path.join(COMMODITIES_DIR, `${f}.csv`));
+    if (data.length > 0) commodities[f.toUpperCase()] = data[data.length-1]?.price;
+  }
+
+  // Événements actifs (données RÉELLES)
   const eventMatrix = readCSV(path.join(EVENTS_DIR, 'events_daily_matrix.csv'));
   const today = new Date().toISOString().substring(0, 10);
   const todayEvents = eventMatrix.filter(e => e.date === today);
@@ -89,15 +112,69 @@ function buildPrompt(ticker, prices, macro, events) {
     ? Object.entries(todayEvents[0]).filter(([k,v]) => k !== 'date' && parseFloat(v) > 0).map(([k]) => k)
     : [];
 
+  // Actualités récentes (données RÉELLES)
+  let newsHeadlines = [];
+  try {
+    const newsData = JSON.parse(fs.readFileSync(path.join(EVENTS_DIR, 'economic_news.json'), 'utf8'));
+    const keywords = COMPANY_KEYWORDS[ticker] || [ticker];
+    newsHeadlines = newsData.articles
+      .filter(a => keywords.some(k => a.title.toUpperCase().includes(k)))
+      .slice(0, 5)
+      .map(a => a.title);
+  } catch (e) { /* no news */ }
+
+  // Indicateurs techniques calculés sur données RÉELLES
+  const latest50 = prices.slice(-50);
+  const sma20 = latest50.slice(-20).reduce((s, p) => s + p.close, 0) / 20;
+  const high50 = Math.max(...latest50.map(p => p.close));
+  const low50 = Math.min(...latest50.map(p => p.close));
+  const range50 = high50 - low50;
+  const currentPos = range50 > 0 ? ((lastPrice - low50) / range50 * 100) : 50;
+  const priceMomentum = prices.length > 30 
+    ? ((lastPrice / prices[prices.length - 30]?.close - 1) * 100) : 0;
+
+  const lastBCEAO = lastRow(bceao, 'value') !== 'N/A' ? lastRow(bceao, 'value') : lastRow(bceao, 'rate');
+  const lastGDP = lastRow(gdp);
+  const lastInfl = lastRow(inflation);
+  const lastFed = lastRow(fed);
+
+  // Volume analysis (données RÉELLES de volume)
+  const volumes = prices.slice(-60).map(p => parseFloat(p.volume) || 0).filter(v => v > 0);
+  const avgVol = volumes.length > 0 ? volumes.reduce((s, v) => s + v, 0) / volumes.length : 0;
+  const lastVol = parseFloat(prices[prices.length-1]?.volume) || 0;
+  const volSignal = avgVol > 0 ? (lastVol / avgVol > 1.5 ? 'HIGH' : lastVol / avgVol < 0.5 ? 'LOW' : 'NORMAL') : 'N/A';
+
+  // News section
+  const newsSection = newsHeadlines.length > 0
+    ? 'RECENT NEWS:\n' + newsHeadlines.map((n, i) => `${i+1}. ${n}`).join('\n')
+    : '';
+
   const macroSummary = [
-    `BCEAO rate: ${bceao.length > 0 ? (bceao[bceao.length-1]?.value || bceao[bceao.length-1]?.rate || 'N/A') : 'N/A'}`,
-    `GDP CI: ${gdp.length > 0 ? (gdp[gdp.length-1]?.value || 'N/A') : 'N/A'}`,
-    `Inflation: ${inflation.length > 0 ? (inflation[inflation.length-1]?.value || 'N/A') : 'N/A'}`,
+    `BCEAO rate: ${lastBCEAO}%`,
+    `GDP CI growth: ${lastGDP}%`,
+    `Inflation CI: ${lastInfl}%`,
+    `Fed Funds rate: ${lastFed}%`,
+    `EUR/XOF: 655.957 (fixed peg)`,
+    `Brent crude: $${commodities.BRENT || 'N/A'}/baril`,
+    `Gold: $${commodities.GOLD || 'N/A'}/oz`,
+    `Cocoa: $${commodities.COCOA || 'N/A'}/tonne`,
+    `Copper: $${commodities.COPPER || 'N/A'}/lb`,
     `Active events: ${activeEvents.join(', ') || 'None'}`,
-    `Ticker full name: ${getTickerName(ticker)}`
+    `Company: ${getTickerName(ticker)}`
   ].join('\n');
 
-  const prompt = `[INST] You are a senior financial analyst for BRVM stocks. Analyze the data and return ONLY valid JSON.
+  const technicalSection = [
+    `SMA20: ${sma20.toFixed(0)} FCFA`,
+    `50-day High: ${high50.toFixed(0)} FCFA`,
+    `50-day Low: ${low50.toFixed(0)} FCFA`,
+    `Price Position: ${currentPos.toFixed(0)}% of range`,
+    `Momentum (30d): ${priceMomentum.toFixed(2)}%`,
+    `Volume Signal: ${volSignal}`,
+    `Avg Vol (60d): ${avgVol.toFixed(0)}`,
+    `Last Vol: ${lastVol}`
+  ].join('\n');
+
+  const prompt = `[INST] You are a senior financial analyst for BRVM stocks. Use the REAL data below.
 
 TICKER: ${ticker} (${getTickerName(ticker)})
 LAST PRICE: ${lastPrice} FCFA
@@ -105,14 +182,19 @@ ANNUAL RETURN: ${annualRet.toFixed(2)}%
 VOLATILITY: ${vol}%
 DATA POINTS: ${prices.length}
 
-RECENT PRICES:
+TECHNICAL INDICATORS:
+${technicalSection}
+
+RECENT PRICES (last 30):
 ${priceHistory}
 
-MACRO:
+MACRO & EXOGENOUS DATA (REAL):
 ${macroSummary}
 
-Respond with EXACTLY this JSON structure, no other text:
-{"ticker":"${ticker}","analysis":{"trend":"up_or_down_or_sideways","exogenousImpact":{"interestRates":5,"commodityPrices":5,"inflation":5,"geopolitical":5,"political":5}},"predictions":{"nextMonth":{"low":${Math.round(lastPrice*0.95)},"high":${Math.round(lastPrice*1.05)},"confidence":"MEDIUM"},"nextYear":{"low":${Math.round(lastPrice*0.85)},"high":${Math.round(lastPrice*1.3)},"direction":"up"}},"recommendation":"HOLD","reasoning":"Brief reasoning here","risks":["risk1","risk2","risk3"]}[/INST]`;
+${newsSection}
+
+Analyze this real data and return ONLY valid JSON:
+{"ticker":"${ticker}","analysis":{"trend":"up_or_down_or_sideways","exogenousImpact":{"interestRates":5,"commodityPrices":5,"inflation":5,"geopolitical":5,"political":5}},"predictions":{"nextMonth":{"low":${Math.round(lastPrice*0.95)},"high":${Math.round(lastPrice*1.05)},"confidence":"MEDIUM"},"nextYear":{"low":${Math.round(lastPrice*0.85)},"high":${Math.round(lastPrice*1.3)},"direction":"up"}},"recommendation":"BUY_or_HOLD_or_SELL","reasoning":"Key insight based on real data","risks":["risk1","risk2","risk3"]}[/INST]`;
 
   return prompt;
 }
